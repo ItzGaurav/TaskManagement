@@ -1,0 +1,14 @@
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\TnTManagement.Feature.dll.config
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\TnTManagement.Feature.dll
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\TnTManagement.Feature.pdb
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\EntityFramework.dll
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\EntityFramework.xml
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\obj\Debug\TnTManagement.Feature.dll
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\obj\Debug\TnTManagement.Feature.pdb
+C:\Users\sanjeev.nair\documents\visual studio 2015\Projects\TnTManagement\TnTManagement.Feature\obj\Debug\TnTManagement.Feature.csprojResolveAssemblyReference.cache
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\Newtonsoft.Json.dll
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\bin\Debug\Newtonsoft.Json.xml
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\obj\Debug\TnTManagement.Feature.Migrations.initial.resources
+C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.Feature\obj\Debug\TnTManagement.Feature.csproj.GenerateResource.Cache

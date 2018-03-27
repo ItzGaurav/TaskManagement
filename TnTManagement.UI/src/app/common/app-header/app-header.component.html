@@ -1,0 +1,29 @@
+﻿
+<div class="navbar navbar-inverse navbar-fixed-top" *ngIf="isUserLoggedIn">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Activity Tracker</a>
+
+    </div>
+
+
+    <ul class="nav navbar-nav">
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/home']">Home</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/project']">Project</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Register</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/task']">Task</a></li>
+        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Time</a></li>
+    </ul>
+    <!--<ul class="nav navbar-nav">
+
+    </ul>-->
+    <ul class="nav navbar-nav navbar-right">
+        <li><h5 style="color:white; padding-top: 8px">Hi {{currentUser.username}} !!</h5></li>
+        <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+</div>
+<br /><br /><br />
