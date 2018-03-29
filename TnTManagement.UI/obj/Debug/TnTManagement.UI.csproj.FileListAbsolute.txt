@@ -1,4 +1,3 @@
-C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\obj\Debug\TnTManagement.UI.csprojResolveAssemblyReference.cache
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\bin\ApplicationInsights.config
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\bin\roslyn\csc.exe
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

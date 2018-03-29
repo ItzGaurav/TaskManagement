@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TnTManagement.Feature.DAL;
@@ -19,13 +20,13 @@ namespace TnTManagement.Feature.Service
             {
                 var tasks = new Tasks
                 {
-                    Name = value.Name,
+                   // Name = value.Name,
                     //Project = value.Project,
                     //DueDate  = value.DueDate,
                     //Hours = value.Hours,
                     //Points = value.Points,
                     //CreatedBy = value.UserId,
-                    CreatedOn = DateTime.Now
+                  //  CreatedOn = DateTime.Now
                 };
                 db.Tasks.Add(tasks);
                 db.SaveChanges();
@@ -33,21 +34,22 @@ namespace TnTManagement.Feature.Service
             }
             return null;
         }
-        public bool CreateAllTasks(List<TaskModel> value)
+        public bool CreateAllTasks(List<TaskModel> value, string UserId)
         {
             if (value != null)
             {
+               
                 foreach (var item in value)
                 {
                     var tasks = new Tasks
                     {
-                        Name = item.Name,
+                       // Name = item.Name,
                         //Project = value.Project,
                         //DueDate  = value.DueDate,
                         //Hours = value.Hours,
                         //Points = value.Points,
-                        CreatedBy = item.,
-                        CreatedOn = DateTime.Now
+                       // CreatedBy = UserId,
+                      //  CreatedOn = DateTime.Now
                     };
                     db.Tasks.Add(tasks);
                 }
@@ -60,26 +62,26 @@ namespace TnTManagement.Feature.Service
         {
             if (value != null)
             {
-                var tasks = db.Tasks .Where(i => i.Id == value.TaskId).FirstOrDefault();
+                ////var tasks = db.Tasks .Where(i => i.Id == value.TaskId).FirstOrDefault();
 
-                tasks.Name = value.Name;
-                //tasks.Project = value.Project;
-                //tasks.DueDate = value.DueDate;
-                //tasks.Hours = value.Hours;
-                //tasks.Points = value.Points;
-                //tasks.ChangedBy = value.UserId;
-                tasks.UpdatedOn  = DateTime.Now;
-                db.Tasks.Add(tasks);
-                db.Entry<Tasks>(tasks).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return tasks;
+                //tasks.Name = value.Name;
+                ////tasks.Project = value.Project;
+                ////tasks.DueDate = value.DueDate;
+                ////tasks.Hours = value.Hours;
+                ////tasks.Points = value.Points;
+                ////tasks.ChangedBy = value.UserId;
+                //tasks.UpdatedOn  = DateTime.Now;
+                //db.Tasks.Add(tasks);
+                //db.Entry<Tasks>(tasks).State = System.Data.Entity.EntityState.Modified;
+                //db.SaveChanges();
+                //return tasks;
             }
             return null;
         }
         public Tasks GetByTaskId(int taskId)
         {
-            var tasks = db.Tasks.Where(i => i.Id == taskId).FirstOrDefault();
-            return tasks;
+            //var tasks = db.Tasks.Where(i => i.Id == taskId).FirstOrDefault();
+            return null;
         }
         public List<Tasks> GetAllTasks()
         {

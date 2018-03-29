@@ -22,7 +22,8 @@
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-        '@angular/common/http': 'npm:@angular/common/bundles/common-http.umd.js',
+      '@angular/common/http': 'npm:@angular/common/bundles/common-http.umd.js',
+      'ng2-auto-complete': 'npm:ng2-auto-complete/dist/ng2-auto-complete.umd.js',
       // other libraries
         'rxjs': 'npm:rxjs',
         'tslib': 'npm:tslib/tslib.js',

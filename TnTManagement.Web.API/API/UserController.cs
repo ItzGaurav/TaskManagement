@@ -89,5 +89,20 @@ namespace TnTManagement.Web.API.API
         {
             return Ok(this.AppUserManager.Users.ToList());
         }
+        [Route("getresources")]
+        public IHttpActionResult GetResources()
+        {
+            var users = this.AppUserManager.Users.ToList();
+            List<ResourceModel> resources = new List<ResourceModel>();
+            foreach (var user in users)
+            {
+                ResourceModel data = new ResourceModel();
+                data.Id = user.Id;
+                data.Name = user.FirstName + ' ' + user.LastName;
+                resources.Add(data);
+            }
+            return Ok(resources);
+        }
+
     }
 }

@@ -222,6 +222,7 @@
     <Compile Include="Providers\AuthorizationServerProvider.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ResourceModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TnTManagement.Feature\TnTManagement.Feature.csproj">

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using TnTManagement.Web.API.Infrastructure;
 
@@ -17,6 +18,12 @@ namespace TnTManagement.Web.API.API
         public BaseApiController()
         {
         }
+        protected string GetUserId()
+        {
+            string userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            return userId;
+        }
+
         protected ApplicationUserManager AppUserManager
         {
             get

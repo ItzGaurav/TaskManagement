@@ -15,7 +15,7 @@ namespace TnTManagement.Feature.DAL
 
         }
         public DbSet<Tasks> Tasks { get; set; }
-        public DbSet<TimeSheet> TimeSheets { get; set; }
+        public DbSet<Activity> Activities { get; set; }
         public DbSet<Project> Projects { get; set; }
     }
 }

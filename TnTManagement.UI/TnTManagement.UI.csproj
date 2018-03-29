@@ -179,12 +179,15 @@
     <TypeScriptCompile Include="src\app\_interface\task.interface.ts" />
     <TypeScriptCompile Include="src\app\_models\alert.ts" />
     <TypeScriptCompile Include="src\app\_models\index.ts" />
+    <TypeScriptCompile Include="src\app\_models\project.ts" />
+    <TypeScriptCompile Include="src\app\_models\resource.ts" />
     <TypeScriptCompile Include="src\app\_models\tasks.ts" />
     <TypeScriptCompile Include="src\app\_models\user.ts" />
     <TypeScriptCompile Include="src\app\_models\userReturn.ts" />
     <TypeScriptCompile Include="src\app\_services\alert.service.ts" />
     <TypeScriptCompile Include="src\app\_services\authentication.service.ts" />
     <TypeScriptCompile Include="src\app\_services\index.ts" />
+    <TypeScriptCompile Include="src\app\_services\project.service.ts" />
     <TypeScriptCompile Include="src\app\_services\task.service.ts" />
     <TypeScriptCompile Include="src\app\_services\user.service.ts" />
     <TypeScriptCompile Include="src\main.ts" />

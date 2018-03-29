@@ -9,7 +9,7 @@ using TnTManagement.Feature.Modals;
 
 namespace TnTManagement.Feature.Service
 {
-    public class TimeSheetService
+    public class ActivityService
     {
        
     }

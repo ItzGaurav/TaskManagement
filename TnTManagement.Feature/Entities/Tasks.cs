@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,27 @@ namespace TnTManagement.Feature.Entities
 {
     public class Tasks : EntityBase
     {
+        [Key]
+        public int TaskID { get; set; }
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }
         public int? ProjectId { get; set; }
-        public string Name { get; set; }
-        public string UserId { get; set; }
-
-        //public decimal Points { get; set; }
-        //public decimal Hours { get; set; }
-        //public DateTime DueDate { get; set; }
-        //public string Project { get; set; }
+        [Column(TypeName = "NVARCHAR")]
+        [StringLength(255)]
+        public string ResourceID { get; set; }
+        [Column(TypeName = "NVARCHAR")]
+        [StringLength(255)]
+        public string TaskType { get; set; }
+        public DateTime PlannedTaskStartDate { get; set; }
+        public DateTime PlannedTaskEndDate { get; set; }
+        public decimal PlannedTaskEffort { get; set; }
+        public DateTime ActualTaskStartDate { get; set; }
+        public DateTime ActualTaskEndDate { get; set; }
+        public decimal ActualTaskEffort { get; set; }
+        [Column(TypeName = "NVARCHAR")]
+        [StringLength(255)]
+        public string TaskStatus { get; set; }
+        public string Description { get; set; }
 
     }
 }

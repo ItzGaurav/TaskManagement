@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TnTManagement.Feature.Modals
 {
-    public class TimesheetModel
+    public class ActivityModel
     {
         public int UserId { get; set; }
         public Task Tasks { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,25 +14,39 @@ namespace TnTManagement.Feature.Service
     {
         public static readonly DataContext db = new DataContext();
 
-        public Project CreateProject(ProjectModel value)
+        public Project CreateProject(ProjectModel value, string userId)
         {
             if (value != null)
             {
                 var project = new Project
                 {
-                    Name = value.Name,
-                    //Project = value.Project,
-                    //DueDate  = value.DueDate,
-                    //Hours = value.Hours,
-                    //Points = value.Points,
-                    //CreatedBy = value.UserId,
-                    CreatedOn = DateTime.Now
+                    ProjectName = value.ProjectName,
+                    CCNumber = value.CCNumber,
+                    EPICID = value.EPICID,
+                    PlannedStartDate = value.PlannedStartDate,
+                    PlannedEndDate = value.PlannedEndDate,
+                    PlannedEffort = value.PlannedEffort,
+                    LastModifiedBy = userId,
+                    ProjectStatus = value.ProjectStatus,
+                    ResourceID = value.ResourceID, 
+                    //ActualStartDate =value.ActualStartDate,
+                    //ActualEndDate = value.ActualEndDate,
+                    //ActualEffort = value.ActualEffort,
+                    LastModifiedDate = DateTime.Now
                 };
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return project;
             }
             return null;
+        }
+
+        public bool DeleteProject(int projectId)
+        {
+            Project project = new Project { ProjectID = projectId };
+            db.Entry(project).State = EntityState.Deleted;
+            db.SaveChanges();
+            return false;
         }
     }
 }

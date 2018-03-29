@@ -32,7 +32,6 @@ namespace TnTManagement.Web.API
             ConfigureOAuth(app);
             ConfigureOAuthTokenConsumption(app);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            //ConfigureOAuth(app);
             ConfigureWebApi(httpConfig);
             app.UseWebApi(httpConfig);
 
@@ -61,8 +60,9 @@ namespace TnTManagement.Web.API
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
                 Provider = new AuthorizationServerProvider(),
+                
                 AccessTokenFormat = new CustomJwtFormat("http://localhost:62822")
             };
             app.UseOAuthAuthorizationServer(OAuthServerOptions);

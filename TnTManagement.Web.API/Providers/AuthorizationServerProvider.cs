@@ -45,21 +45,31 @@ namespace TnTManagement.Web.API.Providers
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
 
             //var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            //identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            //identity.AddClaim(new Claim("role", "SuperAdmin"));
+            //oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.Id));
+            ////oAuthIdentity.AddClaim(new Claim("role", "SuperAdmin"));
 
-            // identity.AddClaim(new Claim("sub", context.UserName)); 
+            oAuthIdentity.AddClaim(new Claim("Id", user.Id));
 
-            // oAuthIdentity.AddClaims(ExtendedClaimsProvider.GetClaims(user));
+            //oAuthIdentity.AddClaims(ExtendedClaimsProvider.GetClaims(user));
 
             //oAuthIdentity.AddClaims(RolesFromClaims.CreateRolesBasedOnClaims(oAuthIdentity));
 
             //  var ticket = new AuthenticationTicket(oAuthIdentity, null);
-            var ticket = new AuthenticationTicket(oAuthIdentity, null);
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    {
+                         "userId", (user.Id == null) ? string.Empty : user.Id
+                    }
+                });
+
+
+
+            var ticket = new AuthenticationTicket(oAuthIdentity, props);
 
             context.Validated(ticket);
 
         }
+       
         //private void SetContextHeaders(OAuthGrantResourceOwnerCredentialsContext context)
         //{
         //    context.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });

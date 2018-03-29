@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'task', component: TaskComponent, canActivate: [AuthGuard] },
-    { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] }
+    { path: 'project', component: ProjectComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: '' }
 ];
 export const routing = RouterModule.forRoot(appRoutes);

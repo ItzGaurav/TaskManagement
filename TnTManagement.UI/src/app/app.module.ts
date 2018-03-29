@@ -5,13 +5,13 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 import { routing } from './app.routing';
 import { AuthGuard } from './_guard/index';
 import { JwtInterceptor } from './_helpers/index';
 import { EqualValidator, AlertComponent } from './_directives/index';
-import { AlertService, AuthenticationService, UserService, TaskService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, ProjectService , TaskService } from './_services/index';
 import { AppHeaderComponent } from './common/app-header/app-header.component';
 
 import { HomeComponent } from './home/index';
@@ -28,6 +28,7 @@ import { ProjectComponent } from './project/index';
         HttpModule,
         HttpClientModule,
         routing,
+        Ng2AutoCompleteModule,
        
     ],
  
@@ -49,6 +50,7 @@ import { ProjectComponent } from './project/index';
         AlertService,
         AuthenticationService,
         UserService,
+        ProjectService,
         TaskService,
         {
             provide: HTTP_INTERCEPTORS,

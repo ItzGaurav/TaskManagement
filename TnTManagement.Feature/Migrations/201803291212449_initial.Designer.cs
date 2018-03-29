@@ -13,7 +13,7 @@ namespace TnTManagement.Feature.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803271343330_initial"; }
+            get { return "201803291212449_initial"; }
         }
         
         string IMigrationMetadata.Source
