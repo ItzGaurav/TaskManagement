@@ -1,7 +1,7 @@
 ﻿import { Component, Input } from '@angular/core';
 
 import { User, UserReturn } from '../../_models/index';
-import { UserService, AlertService } from '../../_services/index';
+import { UserService } from '../../_services/index';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class AppHeaderComponent {
    
     @Input() public isUserLoggedIn: boolean = false;
 
-    constructor(private userService: UserService, private alertService: AlertService) {
+    constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         // console.log(this.currentUser);
         this.getUser()

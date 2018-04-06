@@ -103,6 +103,12 @@ namespace TnTManagement.Web.API.API
             }
             return Ok(resources);
         }
+        //[Route("tokenvalid")]
+        //[Authorize(Roles = "SuperAdmin,Admin,User")]
+        //public IHttpActionResult GetAccess()
+        //{
+        //    return Ok(true);
+        //}
 
     }
 }

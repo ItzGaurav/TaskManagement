@@ -1,4 +1,4 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -7,18 +7,32 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
+
+//import { JwtModule } from '@auth0/angular-jwt';
+//import { AuthModule } from 'angular2-auth';
+
+import { fakeBackendProvider, JwtHelper } from './_helpers/index';
+
 import { routing } from './app.routing';
 import { AuthGuard } from './_guard/index';
 import { JwtInterceptor } from './_helpers/index';
-import { EqualValidator, AlertComponent } from './_directives/index';
-import { AlertService, AuthenticationService, UserService, ProjectService , TaskService } from './_services/index';
-import { AppHeaderComponent } from './common/app-header/app-header.component';
+import { EqualValidator } from './_directives/index';
+import { AuthenticationService, UserService, ProjectService, TaskService } from './_services/index'; //AlertService,
+
 
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { TaskComponent, TaskChildComponent } from './task/index';
-import { ProjectComponent } from './project/index';
+import { ProjectModule } from "./projectModule/project.module";
+import { AlertModule } from '../app/_directives/alert.module';
+import { AppHeaderModule } from './common/app-header/app-header.module';
+import { DialogModule } from './common/app-dialog/dialog.module';
+
+//import { AUTH_PROVIDERS } from 'angular2-jwt';
+
+//import { AuthHttp, AuthConfig } from '@auth0/angular2-jwt';
+
 
 @NgModule({
     imports: [
@@ -28,37 +42,59 @@ import { ProjectComponent } from './project/index';
         HttpModule,
         HttpClientModule,
         routing,
+        ProjectModule,
         Ng2AutoCompleteModule,
-       
+        AppHeaderModule,
+        AlertModule,
+        DialogModule
+        //JwtModule.forRoot({
+        //    config: {
+        //        tokenGetter: () => {
+        //            return localStorage.getItem('token');
+        //        },
+        //        whitelistedDomains: ['localhost:3000']
+        //    }
+        //}),
+        // AuthModule,
+        //   JwtHelperService,
+
     ],
- 
+
     declarations: [
         AppComponent,
-        AppHeaderComponent,
-        AlertComponent,
+        //AppHeaderComponent,
+        //AlertComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent,
         TaskComponent,
         TaskChildComponent,
-        ProjectComponent,
+
         EqualValidator],
 
 
     providers: [
         AuthGuard,
-        AlertService,
+        // AuthGuard, ...AUTH_PROVIDERS, AuthenticationService,
+      //  AlertService,
         AuthenticationService,
         UserService,
         ProjectService,
+        JwtHelper,
         TaskService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true,
-        }
+        },
+        fakeBackendProvider,
+
     ],
 
-    bootstrap:    [ AppComponent ]
+    bootstrap: [AppComponent],
+
 })
 export class AppModule { }
+[
+
+]

@@ -1,8 +1,20 @@
-﻿export class Task {
-    public Id: number;
-    public name: string;
+﻿import { Resource } from './resource'
 
+export class TaskType {
+    public taskType: string;
+    public plannedHours: number;
+    public resource: Resource;
 }
+//export class Resource {
+//    public id: number;
+//    public name: string;
+//}
 export class TaskList {
-    public TaskData: Task[];
+
+    public projectId?: number;
+    public taskName?: string;
+    public plannedStartDate?: string;
+    public plannedEndDate?: string;
+    public description?: string;   
+    public tasktype?: TaskType[];
 }

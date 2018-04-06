@@ -5,24 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TnTManagement.Feature.Modals
+namespace TnTManagement.Feature.Models
 {
 
     public class TaskModel
     {
-        public int TaskId { get; set; }
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        //public decimal Points { get; set; }
-        //public decimal Hours { get; set; }
-        //public DateTime DueDate { get; set; }
-        //public string Project { get; set; }
-
-        public string UserId { get; set; }
+        [JsonProperty(PropertyName = "taskType")]
+        public string TaskType { get; set; }
+        [JsonProperty(PropertyName = "plannedEffort")]
+        public int PlannedHours { get; set; }
+        [JsonProperty(PropertyName = "resource")]
+        public ResourceModel Resources { get; set; }
     }
     public class TaskList
     {
+   
+        [JsonProperty(PropertyName = "projectId")]
+        public int ProjectId { get; set; }
+        [JsonProperty(PropertyName = "taskName")]
+        public string TaskName { get; set; }
+        [JsonProperty(PropertyName = "plannedStartDate")]
+        public DateTime PlannedStartDate { get; set; }
+        [JsonProperty(PropertyName = "plannedEndDate")]
+        public DateTime PlannedEndDate { get; set; }
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+        [JsonProperty(PropertyName = "tasktype")]
         public List<TaskModel> Task { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TnTManagement.Feature.DAL;
 using TnTManagement.Feature.Entities;
-using TnTManagement.Feature.Modals;
+using TnTManagement.Feature.Models;
 
 namespace TnTManagement.Feature.Service
 {
@@ -20,13 +20,13 @@ namespace TnTManagement.Feature.Service
             {
                 var tasks = new Tasks
                 {
-                   // Name = value.Name,
+                    // Name = value.Name,
                     //Project = value.Project,
                     //DueDate  = value.DueDate,
                     //Hours = value.Hours,
                     //Points = value.Points,
                     //CreatedBy = value.UserId,
-                  //  CreatedOn = DateTime.Now
+                    //  CreatedOn = DateTime.Now
                 };
                 db.Tasks.Add(tasks);
                 db.SaveChanges();
@@ -34,22 +34,26 @@ namespace TnTManagement.Feature.Service
             }
             return null;
         }
-        public bool CreateAllTasks(List<TaskModel> value, string UserId)
+        public bool CreateAllTasks(TaskList value, string UserId)
         {
             if (value != null)
             {
-               
-                foreach (var item in value)
+
+                foreach (var item in value.Task)
                 {
                     var tasks = new Tasks
                     {
-                       // Name = item.Name,
-                        //Project = value.Project,
-                        //DueDate  = value.DueDate,
-                        //Hours = value.Hours,
-                        //Points = value.Points,
-                       // CreatedBy = UserId,
-                      //  CreatedOn = DateTime.Now
+                        TaskName = value.TaskName,
+                        ProjectId = value.ProjectId,
+                        PlannedTaskStartDate = value.PlannedStartDate,
+                        PlannedTaskEndDate = value.PlannedEndDate,
+                        Description = value.Description,
+                        TaskType = item.TaskType,
+                        PlannedTaskEffort = item.PlannedHours,
+                        ResourceID = item.Resources.Id,
+                        TaskStatus = "Open",
+                        LastModifiedBy = UserId,
+                        LastModifiedDate = DateTime.Now
                     };
                     db.Tasks.Add(tasks);
                 }

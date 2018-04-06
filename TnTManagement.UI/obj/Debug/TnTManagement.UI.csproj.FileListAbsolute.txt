@@ -30,3 +30,5 @@ C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTMan
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\obj\Debug\TnTManagement.UI.dll
 C:\Users\sanjeev.nair\Documents\Visual Studio 2015\Projects\TnTManagement\TnTManagement.UI\obj\Debug\TnTManagement.UI.pdb
+C:\Users\sanjeev.nair\documents\visual studio 2015\Projects\TnTManagement\TnTManagement.UI\obj\Debug\TnTManagement.UI.csprojResolveAssemblyReference.cache
+C:\Users\sanjeev.nair\documents\visual studio 2015\Projects\TnTManagement\TnTManagement.UI\obj\Debug\TnTManagement.UI.g.resources

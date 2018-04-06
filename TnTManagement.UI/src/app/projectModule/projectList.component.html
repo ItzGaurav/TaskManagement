@@ -1,0 +1,116 @@
+﻿<!--<div class="row">
+   
+    <!--<div class="col-lg-3">
+        <label class="label-control">Rows on page</label>
+        <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="2">2</option>
+            <option [ngValue]="3">3</option>
+            <option [ngValue]="5">5</option>
+        </select>
+    </div>-->
+  
+    <!--<div class="col-md-2 col pull-right">
+        <select class="form-control input-sm" [(ngModel)]="sortBy">-->
+            <!--<option [ngValue]="sortByWordLength">Project Name</option>-->
+            <!--<option ngValue="projectName">Project Name</option>
+            <option ngValue="epicId">Epic Id</option>
+            <option ngValue="ccNumber">CC Number</option>
+            <option ngValue="plannedStartDate">Planned Start Date</option>
+            <option ngValue="plannedEndDate">Planned End Date</option>
+            <option ngValue="plannedEffort">Planned Effort</option>
+            <option ngValue="projectStatus">Project Status</option>
+        </select>
+    </div>-->
+    <!--<div class="col-md-2 pull-right col order-last">
+        <select class="form-control input-sm" [(ngModel)]="sortOrder">
+            <option ngValue="asc">Ascending</option>
+            <option ngValue="desc">Descending</option>-->
+            <!--<option ngValue="badValue">Bad value</option>-->
+        <!--</select>
+    </div>
+</div>-->
+<br />
+<div class="clearfix"></div>
+<div class="row">
+
+    <div class="col-lg-12 text-center" *ngIf="loading">
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+
+    <div class="col-lg-12" *ngIf="!loading">
+
+        
+
+        <table class="table table-bordered" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+                <tr>
+                
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="projectName">Project</mfDefaultSorter>
+                    </th>
+                    <th style="width: 40%">
+                        <mfDefaultSorter by="epicId">EpicId</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="ccNumber">CC Number</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="plannedStartDate">Planned Start Date</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="plannedEndDate">Planned End Date</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="plannedEffort">Planned Effort</mfDefaultSorter>
+                    </th>
+
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="projectStatus">Status</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of mf.data">
+                    <td>{{item.projectName}}</td>
+                    <td>{{item.ccNumber}}</td>
+                    <td class="text-right">{{item.ccNumber}}</td>
+                    <td>{{item.plannedStartDate | date:'MMM d, y'}}</td>
+                    <td>{{item.plannedEndDate | date:'MMM d, y'}}</td>
+                    <td>{{item.plannedEffort}}</td>
+                    <td>{{item.projectStatus}}</td>
+                    <td>
+                        <!--<button class="btn btn-danger" title="remove" (click)="removeItem(item)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>-->
+                        <!--<button class="btn btn-danger" title="remove" (click)="removeItem(item); showDialog = !showDialog"><span class="glyphicon glyphicon-remove"></span></button>
+                        <app-dialog [(visible)]="showDialog">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Delete !!</h3>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Do you wanted to delete? {{item.projectName}}</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" (click)="showDialog = !showDialog">Cancel</button>
+                                <button type="button" class="btn btn-danger" (click)="showDialog = !showDialog">Delete</button>
+                            </div>
+                        </app-dialog>-->
+                        <!--<button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">
+                            Do it!
+                        </button>-->
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+ 
+</div>

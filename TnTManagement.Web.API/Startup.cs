@@ -60,7 +60,7 @@ namespace TnTManagement.Web.API
                 //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/oauth/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(15),
                 Provider = new AuthorizationServerProvider(),
                 
                 AccessTokenFormat = new CustomJwtFormat("http://localhost:62822")

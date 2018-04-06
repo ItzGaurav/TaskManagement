@@ -22,15 +22,13 @@ export class RegisterComponent {
         this.alertService.clear();
         this.loading = true;
         let _user = new User(this.model.id, this.model.email, this.model.userName, this.model.password, this.model.confirmPassword, this.model.firstName, this.model.lastName);
-
-        
         this.userService.create(_user).subscribe(
             data => {
                 this.alertService.success("Registration Successfull", true);
                 this.loading = false;
-                setTimeout((router: Router) => {
-                    this.router.navigate(['login']);
-                }, 2000); 
+                //setTimeout((router: Router) => {
+                //    this.router.navigate(['login']);
+                //}, 2000); 
             },
             error => {
                // console.log(error['error']['message']);

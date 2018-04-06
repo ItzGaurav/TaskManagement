@@ -28,7 +28,7 @@ namespace TnTManagement.Feature.Service
                     PlannedEffort = value.PlannedEffort,
                     LastModifiedBy = userId,
                     ProjectStatus = value.ProjectStatus,
-                    ResourceID = value.ResourceID, 
+                    ResourceID = value.ResourceID,
                     //ActualStartDate =value.ActualStartDate,
                     //ActualEndDate = value.ActualEndDate,
                     //ActualEffort = value.ActualEffort,
@@ -47,6 +47,25 @@ namespace TnTManagement.Feature.Service
             db.Entry(project).State = EntityState.Deleted;
             db.SaveChanges();
             return false;
+        }
+
+        public List<ProjectModel> GetAllProjects()
+        {
+            var data =  db.Projects.OrderByDescending(x => x.LastModifiedDate).ToList();
+            return data.Select(a => new ProjectModel(){
+                ProjectID = a.ProjectID,
+                ProjectName = a.ProjectName,
+                EPICID = a.EPICID,
+                CCNumber = a.CCNumber,
+                ProjectStatus = a.ProjectStatus,
+                ResourceID =a.ResourceID,
+                PlannedStartDate =a.PlannedStartDate,
+                PlannedEndDate = a.PlannedEndDate,
+                PlannedEffort = a.PlannedEffort,
+                ActualStartDate = a.ActualStartDate,
+                ActualEndDate = a.ActualEndDate,
+                ActualEffort =a.ActualEffort                
+            }).ToList();
         }
     }
 }

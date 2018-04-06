@@ -1,0 +1,16 @@
+﻿<!--<div [@dialog] *ngIf="visible" class="dialog">
+    <ng-content></ng-content>
+    <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>-->
+
+
+<div class="dialog" [@dialog] *ngIf="visible">
+    <!--<button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>-->
+    <button type="button" (click)="close()" class="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <ng-content></ng-content>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

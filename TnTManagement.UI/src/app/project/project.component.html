@@ -17,8 +17,7 @@
                         <input type="text" class="form-control" name="epicId" [(ngModel)]="model.epicId" #epicId="ngModel" required placeholder="Epic Id">
                         <div *ngIf="f.submitted && !epicId.valid" class="validationerror">Epic Id is required</div>
                     </div>
-                    <br />
-                    <br />
+                    <div class="clearfix"></div>
                     <div class="form-group col-xs-6">
                         <label for="ccNumber">CC Number</label>
                         <input type="text" class="form-control" name="ccNumber" [(ngModel)]="model.ccNumber" #ccNumber="ngModel" required placeholder="CC Number">
@@ -28,17 +27,17 @@
                         <label for="resource">Resource</label>
 
                         <input ng2-auto-complete
-                               [formControl]="continent"
+                               [formControl]="userresource"
                                [source]="resources"
                                [list-formatter]="autocompleListFormatter"
                                value-property-name="id"
                                display-property-name="name"
                                [(ngModel)]="model.resource"
                                placeholder="Resource"
-                               class="form-control col-xs-6"  required>
-                      
+                               class="form-control col-xs-6" required>
+
                         <!--<input type="text" class="form-control" name="resource" [(ngModel)]="model.resource" #resource="ngModel" required placeholder="Resource">-->
-                        <div *ngIf="f.submitted && !continent.valid" class="validationerror">Resource is required</div>
+                        <div *ngIf="f.submitted && !userresource.valid" class="validationerror">Resource is required</div>
                     </div>
                     <!--<br />
                     <br />-->
@@ -67,21 +66,29 @@
                         <div *ngIf="f.submitted && !plannedEndDate.valid" class="validationerror">Planned End Date is required</div>
                     </div>
                     <div class="form-group col-xs-3">
-                        <label for="plannedEffort">Planned Effort</label>
-                        <input type="number" class="form-control" name="plannedEffort" [(ngModel)]="model.plannedEffort" #plannedEffort="ngModel" required placeholder="Planned Effort">
+                        <label for="plannedEffort">Planned Effort (Hours)</label>
+                        <input type="number" min="0" step="1" max="1000" oninput="validity.valid||(value='');" class="form-control" name="plannedEffort" [(ngModel)]="model.plannedEffort" #plannedEffort="ngModel" required placeholder="Planned Effort">
                         <div *ngIf="f.submitted && !plannedEffort.valid" class="validationerror">Planned Effort is required</div>
                     </div>
-
+                    <div class="form-group col-xs-12">
+                        <hr />
+                    </div>
+                    <div class="form-group col-xs-11">
+                        <button type="button" class="btn btn-primary pull-right btn-sm" (click)="clearForm()">Reset</button>
+                    </div>
+                    <div class="form-group col-xs-1">
+                        <button [disabled]="loading" class="btn btn-primary pull-right btn-sm">Submit</button>
+                        <img class="pull-right" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        <!--<a [routerLink]="['/login']" class="btn btn-link">Cancel</a>-->
+                    </div>
                 </div>
                 <alert></alert>
             </div>
-            <div class="form-group col-xs-12">
-                <button [disabled]="loading" class="btn btn-primary pull-right btn-sm">Submit</button>
-                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                <!--<a [routerLink]="['/login']" class="btn btn-link">Cancel</a>-->
-            </div>
+
         </form>
     </div>
+    <div class="clearfix"></div>
+    <projectlist *ngIf="!loading"></projectlist>
 </div>
 
 

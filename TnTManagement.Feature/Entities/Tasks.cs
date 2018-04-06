@@ -20,12 +20,14 @@ namespace TnTManagement.Feature.Entities
         public string ResourceID { get; set; }
         [Column(TypeName = "NVARCHAR")]
         [StringLength(255)]
+
+        public string TaskName{ get; set; }
         public string TaskType { get; set; }
         public DateTime PlannedTaskStartDate { get; set; }
         public DateTime PlannedTaskEndDate { get; set; }
         public decimal PlannedTaskEffort { get; set; }
-        public DateTime ActualTaskStartDate { get; set; }
-        public DateTime ActualTaskEndDate { get; set; }
+        public DateTime? ActualTaskStartDate { get; set; }
+        public DateTime? ActualTaskEndDate { get; set; }
         public decimal ActualTaskEffort { get; set; }
         [Column(TypeName = "NVARCHAR")]
         [StringLength(255)]

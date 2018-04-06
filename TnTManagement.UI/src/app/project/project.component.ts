@@ -1,79 +1,54 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 
-import { ProjectService, UserService  } from '../_services/index';
+import { ProjectService, UserService, AlertService } from '../_services/index';
 import { Project } from '../_models/project';
-
-
+import { ProjectListComponent } from '../projectModule/projectList.component';
 
 @Component({
+    providers: [ProjectListComponent],
     moduleId: module.id,
-    templateUrl : 'project.component.html'
+    templateUrl: 'project.component.html'
+
 })
 
 export class ProjectComponent implements OnInit {
-    model: any = {} ;
+    model: any = {};
     loading = false;
     statuses = [
         { name: 'Open' },
         { name: 'Pending' },
         { name: 'Closed' },
         //{ isDivider: true },
-        { name: 'Ongoing'}
+        { name: 'Ongoing' }
     ];
-    constructor(private _projectService: ProjectService, private _userService: UserService, private builder: FormBuilder, private _sanitizer: DomSanitizer) {
+    constructor(private _projectService: ProjectService, private _userService: UserService, private _alertService: AlertService,
+        private builder: FormBuilder, private _sanitizer: DomSanitizer,
+        private comp: ProjectListComponent) {
         this.model.plannedStartDate = new Date();
         this.model.plannedEndDate = new Date();
         this.loadResources();
     }
-    public continents = [{
-        id: 1,
-        name: 'Asia',
-        population: '4,157,300,000'
-    }, {
-        id: 2,
-        name: 'Africa',
-        population: '1,030,400,000'
-    }, {
-        id: 3,
-        name: 'Europe',
-        population: '738,600, 000'
-    }, {
-        id: 4,
-        name: 'North America',
-        population: '461,114,000'
-    }, {
-        id: 5,
-        name: 'South America',
-        population: '390,700,000'
-    }, {
-        id: 6,
-        name: 'Australia',
-        population: '36,700,000'
-    }, {
-        id: 7,
-        name: 'Antartica',
-        population: 0
-    }
-    ];
-    public resources: any = {};
     
+    public resources: any = {};
 
-    public continent: FormControl;
+    
+    public userresource: FormControl;
     ngOnInit() {
-        
-
-        this.continent = new FormControl('')
+        document.body.classList.remove('bg-img');
+        this.userresource = new FormControl('')
     }
+
     loadResources() {
         this._userService.getResources().subscribe(
             data => {
                 this.resources = data;
+                
             },
             error => {
-                alert("resources not loaded");
+                this._alertService.error("Resources not loaded", false);
             }
         );
     }
@@ -94,11 +69,17 @@ export class ProjectComponent implements OnInit {
         proj.plannedEndDate = this.model.plannedEndDate;
         proj.plannedEffort = this.model.plannedEffort;
         proj.resourceId = this.model.resource['id'];
-        console.log(proj);
+        // console.log(proj);
         this._projectService.createProject(proj).subscribe(
             data => {
-                alert("success");
+                this._alertService.success("Project created successfully", false);
                 this.loading = false;
+            
+                this.comp.ngOnInit();
+                setTimeout(()=>{
+                    this.clearForm();
+                },2000)
+
             },
             error => {
                 alert("error");
@@ -106,5 +87,14 @@ export class ProjectComponent implements OnInit {
             }
         )
     }
-
+    clearForm() {
+        this.model.projectName = '';
+        this.model.epicId = '';
+        this.model.ccNumber = '';
+        this.model.projectStatus = '';
+        this.model.plannedStartDate = new Date();
+        this.model.plannedEndDate = new Date();
+        this.model.plannedEffort = '';
+        this.model.resource = null;
+    }
 }

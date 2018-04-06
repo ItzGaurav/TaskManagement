@@ -1,42 +1,62 @@
 ﻿
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Task, TaskList } from '../_models/tasks';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { TaskService } from '../_services/task.service';
+import { TaskType, TaskList } from '../_models/tasks';
+
+import { TaskService, ProjectService } from '../_services/index';
 
 @Component({
     selector: 'task',
-    templateUrl: './task.component.html'
+    templateUrl: './task.component.html',
+    //directives: [FORM_DIRECTIVES]
 })
 export class TaskComponent implements OnInit {
     public myForm: FormGroup;
-
-    constructor(private _fb: FormBuilder, private taskService: TaskService) { }
+    public options: any = [];
+    constructor(private _fb: FormBuilder, private taskService: TaskService, private _projectService: ProjectService) {
+        this.loadProjects();
+       
+      
+    }
     ngOnInit() {
         this.myForm = this._fb.group({
-            //name: ['', [Validators.required, Validators.minLength(5)]],
-            addresses: this._fb.array([])
+            projectId: [0, [Validators.required]],
+            taskName: ['', [Validators.required]],
+            plannedStartDate: ['', [Validators.required]],
+            plannedEndDate: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            tasktype: this._fb.array([])
         });
-
-        // add address
-        this.addAddress();
-
+        this.myForm.controls['plannedStartDate'].setValue(this.currentDate());
+        this.myForm.controls['plannedEndDate'].setValue(this.currentDate());
+        this.addTaskType();
         /* subscribe to addresses value changes */
         // this.myForm.controls['addresses'].valueChanges.subscribe(x => {
         //   console.log(x);
         // })
-
     }
     initAddress() {
         return this._fb.group({
-            name: ['', Validators.required],
-            //postcode: ['', Validators.required]
+            tasktype: ['', Validators.required],
+            plannedEffort: ['', Validators.compose([Validators.required, this.nonZero])],
+            resource: ['', Validators.required]
+
         });
     }
-
-    addAddress() {
-        const control = <FormArray>this.myForm.controls['addresses'];
+    nonZero(control: FormControl): { [key: string]: any; } {
+        if (Number(control.value) < 0) {
+            return { nonZero: true };
+        } else {
+            return null;
+        }
+    }
+    currentDate() {
+        const currentDate = new Date();
+        return currentDate.toISOString().substring(0, 10);
+    }
+    addTaskType() {
+        const control = <FormArray>this.myForm.controls['tasktype'];
         const addrCtrl = this.initAddress();
 
         control.push(addrCtrl);
@@ -47,14 +67,25 @@ export class TaskComponent implements OnInit {
         // })
     }
 
-    removeAddress(i: number) {
-        const control = <FormArray>this.myForm.controls['addresses'];
+    removeTasks(i: number) {
+        const control = <FormArray>this.myForm.controls['tasktype'];
         control.removeAt(i);
     }
 
-    save(model: Task[]) {
-       
-   
+    loadProjects() {
+        this._projectService.getAllProjectDropdown().subscribe(
+            data => {
+               // alert(JSON.stringify(data));
+                this.options = data; 
+            }, error => {
+                alert("Failed to load Projects");
+            })
+    }
+
+    
+    save(model: TaskList) {
+
+      //  console.log(JSON.stringify(model));
        // let task: Task[];
        // var reportPersonList: Task[] = new Array();
 
@@ -77,9 +108,13 @@ export class TaskComponent implements OnInit {
       //  var taskData = new TaskList;
        // taskData.TaskData = reportPersonList;
        // console.log(JSON.StaskData);
-        const control = <FormArray>this.myForm.controls['addresses'];
-        let terminals = control.value;
-        this.taskService.createAllTasks(terminals).subscribe(data => {
+       // let requestData: TaskList;
+        //const control = <FormArray>this.myForm.controls['tasktype'].value;
+        //const taskName = <FormArray>this.myForm.controls['taskName'].value;
+        //const terminals = <FormArray>this.myForm.value;
+        //requestData.taskName = taskName;
+       // console.log(terminals);
+        this.taskService.createAllTasks(this.myForm.value).subscribe(data => {
             alert("success");
         },
             error => {

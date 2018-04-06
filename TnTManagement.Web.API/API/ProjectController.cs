@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 using TnTManagement.Feature.Models;
@@ -10,7 +11,7 @@ namespace TnTManagement.Web.API.API
     public class ProjectController : BaseApiController
     {
         ProjectService _projectService = new ProjectService();
-        [Authorize(Roles =  "Admin,Super Admin")]
+        [Authorize(Roles =  "Admin,SuperAdmin")]
         [Route("create")]
         public IHttpActionResult CreateProject(ProjectModel value)
         {
@@ -21,6 +22,28 @@ namespace TnTManagement.Web.API.API
                 return Ok(_projectService.CreateProject(value, userId));
             }
             return Ok(false);
+        }
+        [Authorize(Roles = "Admin,SuperAdmin,User")]
+        [Route("getProjects")]
+        public IHttpActionResult GetProject()
+        {
+
+            var projects = this._projectService.GetAllProjects();
+            List<ProjectDropdownModel> projectsDropdown = new List<ProjectDropdownModel>();
+            foreach (var project in projects)
+            {
+                ProjectDropdownModel data = new ProjectDropdownModel();
+                data.ProjectID = project.ProjectID;
+                data.ProjectName = project.ProjectName;
+                projectsDropdown.Add(data);
+            }
+            return Ok(projectsDropdown);
+        }
+        [Authorize(Roles ="SuperAdmin,Admin")]
+        [Route("getAllProjects")]
+        public IHttpActionResult GetAllProjects()
+        {
+            return Ok(this._projectService.GetAllProjects()); 
         }
 
     }

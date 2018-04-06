@@ -57,12 +57,14 @@
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Tasks.cs" />
     <Compile Include="Entities\Activity.cs" />
-    <Compile Include="Migrations\201803291212449_initial.cs" />
-    <Compile Include="Migrations\201803291212449_initial.Designer.cs">
-      <DependentUpon>201803291212449_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201804030751074_second.cs" />
+    <Compile Include="Migrations\201804030751074_second.Designer.cs">
+      <DependentUpon>201804030751074_second.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ProjectDropdownModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\ResourceModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,8 +77,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803291212449_initial.resx">
-      <DependentUpon>201803291212449_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804030751074_second.resx">
+      <DependentUpon>201804030751074_second.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

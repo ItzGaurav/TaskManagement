@@ -26,9 +26,9 @@ namespace TnTManagement.Feature.Models
         [JsonProperty(PropertyName = "plannedEffort")]
         public int PlannedEffort { get; set; }
         [JsonProperty(PropertyName = "actualStartDate")]
-        public DateTime ActualStartDate { get; set; }
+        public DateTime? ActualStartDate { get; set; }
         [JsonProperty(PropertyName = "actualEndDate")]
-        public DateTime ActualEndDate { get; set; }
+        public DateTime? ActualEndDate { get; set; }
         [JsonProperty(PropertyName = "actualEffort")]
         public int ActualEffort { get; set; }
         [JsonProperty(PropertyName = "projectStatus")]

@@ -2,7 +2,7 @@
 import { Headers, Response, Http, RequestOptions, URLSearchParams } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { UrlHelper } from '../_helpers/index';
+import { UrlHelper, JwtHelper } from '../_helpers/index';
 
 
 import 'rxjs/add/operator/do';
@@ -16,8 +16,8 @@ export class AuthenticationService {
  
     private loginUrl = UrlHelper.apiEndpoint + UrlHelper.loginUrl;
     public token: string;
-
-    constructor(private httpClient: HttpClient) {
+     
+    constructor(private httpClient: HttpClient, public jwtHelper: JwtHelper) { //, 
         // set token if saved in local storage
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = currentUser && currentUser.token;
@@ -36,13 +36,43 @@ export class AuthenticationService {
             else {
                 return false;
             }
-        })
+        }).catch(res => Observable.throw(res));
     }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
-    //login(username: string, password: string): Observable<boolean> {
+    public isAuthenticated(): boolean {
+        
+        const token = localStorage.getItem('currentUser');
+        //console.log(this.jwtHelper.isTokenExpired(token));
+        if (!this.jwtHelper.isTokenExpired(token)) {
+            //console.log("expired");
+            this.logout();
+            return false;
+         
+        }
+        else {
+          //  console.log("not expired");
+            return true;
+        }
+        //let response = false;
+       
+        //this.httpClient.get(UrlHelper.apiEndpoint + UrlHelper.tokenValidUrl).subscribe(
+        //    data => {
+        //        response = true;
+        //    },
+        //    error => {
+        //        this.logout();
+        //    }
+        //);
+        //alert(response);
+        //return response;
+    }
+
+
+        //login(username: string, password: string): Observable<boolean> {
     //    const body = new HttpParams()
     //        //.set('grant_type', 'password')
     //        .set('UserName', 'sanju')

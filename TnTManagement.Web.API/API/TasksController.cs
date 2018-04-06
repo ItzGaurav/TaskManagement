@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
 using TnTManagement.Feature.Entities;
-using TnTManagement.Feature.Modals;
+using TnTManagement.Feature.Models;
 using TnTManagement.Feature.Service;
 
 namespace TnTManagement.Web.API.API
@@ -17,15 +17,15 @@ namespace TnTManagement.Web.API.API
     {
         TaskService _taskService = new TaskService();
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles ="SuperAdmin")]
         [Route("createAll")]
-        public IHttpActionResult CreateAll(List<TaskModel> value)
+        public IHttpActionResult CreateAll(TaskList value)
         {
          
             if (value != null)
             {
                 string userId = GetUserId();
-                return Ok(_taskService.CreateAllTasks(value,userId));
+                return Ok(_taskService.CreateAllTasks(value, userId));
             }
             return Ok(false);
         }

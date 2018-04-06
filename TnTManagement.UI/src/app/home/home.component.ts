@@ -5,7 +5,8 @@ import { UserService, AlertService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    styleUrls:['./home.component.css']
 })
 export class HomeComponent {
     //currentUser: User;
@@ -18,6 +19,7 @@ export class HomeComponent {
     }
     ngOnInit() {
         this.loading = true;
+        document.body.classList.remove('bg-img');
         this.loadAllUsers();
     }
     loadAllUsers() {

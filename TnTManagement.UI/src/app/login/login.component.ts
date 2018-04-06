@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.authenticationService.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
+        document.body.classList.add('bg-img');
     }
     login() {
         this.loading = true;
@@ -37,10 +37,20 @@ export class LoginComponent implements OnInit {
                 this.router.navigate([this.returnUrl]);
             },
             error => {
-               // console.log(error['error']['error_description']);
-               // alert(error);
-                this.alertService.error(error['error']['error_description']);
-                this.loading = false;
+                // console.log(error['error']['error_description']);
+                // alert(error['error'].toString());
+                if (error['status'] == 0) {
+                    this.alertService.error("Http Service Failure!!");
+                    this.loading = false;
+                }
+                else {
+                    this.alertService.error(error['error']['error_description']);
+                    this.loading = false;
+                    setTimeout(() => {
+                        this.alertService.clear();
+                    }, 5000); 
+                }
+
             });
 
 

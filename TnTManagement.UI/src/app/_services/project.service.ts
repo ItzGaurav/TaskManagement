@@ -13,4 +13,10 @@ export class ProjectService {
     createProject(project: Project) {
         return this.httpClient.post(UrlHelper.apiEndpoint + UrlHelper.createProject, project);
     }
+    getAllProjectDropdown() {
+        return this.httpClient.get(UrlHelper.apiEndpoint + UrlHelper.getAllProjects);
+    }
+    getAllProjectList() {
+        return this.httpClient.get(UrlHelper.apiEndpoint + UrlHelper.getAllProjectList);
+    }
 }
