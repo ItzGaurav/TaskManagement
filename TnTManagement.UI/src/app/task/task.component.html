@@ -9,7 +9,7 @@
                 <div class="panel-body">
                     <div class="form-group col-xs-4">
                         <label>Project</label>
-                       <select formControlName="projectId"  class="form-control">
+                        <select formControlName="projectId" class="form-control">
                             <option [ngValue]="undefined" selected>Select Project</option>
                             <option *ngFor="let option of options" [ngValue]="option.projectId">{{option.projectName}}</option>
                         </select>
@@ -25,15 +25,15 @@
                     </div>
 
                     <div class="form-group col-xs-2">
-                        
-                       <!-- <input type="date" name="plannedStartDate" class="form-control" [ngModel]="model.plannedStartDate | date:'yyyy-MM-dd'" (ngModelChange)="model.plannedStartDate = $event" [value]="datee | date:'yyyy-MM-dd'" #plannedStartDate="ngModel" required placeholder="Planned Start Date">-->
+
+                        <!-- <input type="date" name="plannedStartDate" class="form-control" [ngModel]="model.plannedStartDate | date:'yyyy-MM-dd'" (ngModelChange)="model.plannedStartDate = $event" [value]="datee | date:'yyyy-MM-dd'" #plannedStartDate="ngModel" required placeholder="Planned Start Date">-->
 
                         <label>Planned Start Date</label>
-                        <input type="date" class="form-control" formControlName="plannedStartDate" >
+                        <input type="date" class="form-control" formControlName="plannedStartDate">
                     </div>
                     <div class="form-group col-xs-2">
                         <label>Planned End Date</label>
-                        <input type="date" class="form-control"  formControlName="plannedEndDate">
+                        <input type="date" class="form-control" formControlName="plannedEndDate">
                     </div>
                     <div class="form-group col-xs-12">
                         <label>Description</label>
@@ -62,8 +62,6 @@
                 </button>
 
             </div>
-
-
             <br />
             <br />
             <div class="form-group col-xs-12">
@@ -74,5 +72,110 @@
         </form>
 
     </div>
+    <br />
+    <div class="clearfix"></div>
+    <div class="row">
+
+
+
+        <div class="col-lg-12 text-center" *ngIf="loading">
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div class="col-lg-12" *ngIf="!loading">
+            <table class="table table-bordered" [mfData]="allTask" #mf="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                    <tr>
+
+                        <th style="width: 15%">
+                            <mfDefaultSorter by="projectName">Project</mfDefaultSorter>
+                        </th>
+                        <th style="width: 15%">
+                            <mfDefaultSorter by="taskName">Task</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="taskType">Type</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="plannedTaskStartDate">Start Date</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="plannedTaskEndDate">End Date</mfDefaultSorter>
+                        </th>
+                        <th style="width: 8%">
+                            <mfDefaultSorter by="plannedTaskEffort">Effort</mfDefaultSorter>
+                        </th>
+
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="taskStatus">Status</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="resourceName">Resource</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="createrName">Created By</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">Action</th>
+                    </tr>
+                    <tr>
+                        <th colspan="10">
+                            Filter by Task:
+                            <input class="form-control" [(ngModel)]="filterQuery" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
+                        <td>{{item.projectName}}</td>
+                        <td>{{item.taskName}}</td>
+                        <td>{{item.taskType}}</td>
+                        <td>{{item.plannedTaskStartDate | date:'MMM d, y'}}</td>
+                        <td>{{item.plannedTaskEndDate | date:'MMM d, y'}}</td>
+                        <td>{{item.plannedTaskEffort}}</td>
+                        <td>
+                            {{item.taskStatus}}
+                            <!--<a title="edit" (click)="editStatus(item)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>-->
+                       
+                        </td>
+                        <td>{{item.resourceName}}</td>
+                        <td>{{item.createrName}}</td>
+                        <td style='white-space: nowrap'>
+                            <button class="btn btn-danger btn-sm" title="Delete" (click)="deleteTask(item)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <!--<button class="btn btn-danger" title="remove" (click)="removeItem(item); showDialog = !showDialog"><span class="glyphicon glyphicon-remove"></span></button>
+                            <app-dialog [(visible)]="showDialog">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Delete !!</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Do you wanted to delete? {{item.projectName}}</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" (click)="showDialog = !showDialog">Cancel</button>
+                                    <button type="button" class="btn btn-danger" (click)="showDialog = !showDialog">Delete</button>
+                                </div>
+                            </app-dialog>-->
+                            <!--<button class="btn btn-primary" title="edit" (click)="edit(content)"></button>-->
+                            <!--<button type="button" class="btn btn-primary" (click)="showChildModal()"></button>-->
+                            <!--<button  (click)="open(content)"><span class="glyphicon glyphicon-edit"></span></button>-->
+                            <!--<button class="btn btn-primary" (click)="openModal('custom-modal-1')"><span class="glyphicon glyphicon-edit"></span></button>-->
+                            <!--<button type="button" class="btn btn-primary btn-sm" title="Details"><span class="glyphicon glyphicon-folder-open"></span></button>-->
+                            <!--<button type="button" class="btn btn-primary btn-sm" title="Edit" *ngIf="editbutton" (click)="onEditClick(item)"><span class="glyphicon glyphicon-edit"></span></button>-->
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="10">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
 
 </div>

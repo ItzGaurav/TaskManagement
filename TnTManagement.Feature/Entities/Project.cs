@@ -31,6 +31,6 @@ namespace TnTManagement.Feature.Entities
         [Column(TypeName = "NVARCHAR")]
         [StringLength(255)]
         public string ProjectStatus { get; set; }
-        
+        public virtual ICollection<Tasks> Tasks { get; set; }
     }
 }

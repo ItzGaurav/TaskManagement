@@ -16,7 +16,7 @@ export class AuthenticationService {
  
     private loginUrl = UrlHelper.apiEndpoint + UrlHelper.loginUrl;
     public token: string;
-     
+    public roles: string;
     constructor(private httpClient: HttpClient, public jwtHelper: JwtHelper) { //, 
         // set token if saved in local storage
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -31,6 +31,18 @@ export class AuthenticationService {
             if (token) {
                 this.token = token;
                 localStorage.setItem('currentUser', JSON.stringify({ username, token }));
+              //  console.log(this.token);
+                        
+                var pJson = this.jwtHelper.parseJwt(token);
+                if (typeof pJson.role === 'string') {
+                    this.roles = pJson.role.split();
+                   // console.log(this.roles );
+                } else {
+                    this.roles = pJson.role;
+                   // console.log(this.roles);
+                }
+                //console.log(this.roles)
+                localStorage.setItem('roles', this.roles);
                 return true;
             }
             else {
@@ -45,9 +57,13 @@ export class AuthenticationService {
     }
     public isAuthenticated(): boolean {
         
-        const token = localStorage.getItem('currentUser');
+        let token = localStorage.getItem('currentUser');
         //console.log(this.jwtHelper.isTokenExpired(token));
-        if (!this.jwtHelper.isTokenExpired(token)) {
+       
+        var parsedData = JSON.parse(token);
+      //  console.log(parsedData['token']);
+
+        if (!this.jwtHelper.isTokenExpired(parsedData['token'])) {
             //console.log("expired");
             this.logout();
             return false;

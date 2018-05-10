@@ -198,8 +198,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\ActivityController.cs" />
     <Compile Include="API\BaseApiController.cs" />
     <Compile Include="API\ProjectController.cs" />
+    <Compile Include="API\ReportController.cs" />
     <Compile Include="API\RoleController.cs" />
     <Compile Include="API\TasksController.cs" />
     <Compile Include="API\UserController.cs" />
@@ -211,11 +213,8 @@
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
     <Compile Include="Infrastructure\ApplicationUserManager.cs" />
-    <Compile Include="Migrations\201803271017597_initial.cs" />
-    <Compile Include="Migrations\201803271017597_initial.Designer.cs">
-      <DependentUpon>201803271017597_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Infrastructure\IdentityHelper.cs" />
+    <Compile Include="ViewModels\ChangePasswordBindingModel.cs" />
     <Compile Include="ViewModels\CreateRoleBindingModel.cs" />
     <Compile Include="ViewModels\CreateUserBindingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -233,11 +232,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803271017597_initial.resx">
-      <DependentUpon>201803271017597_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

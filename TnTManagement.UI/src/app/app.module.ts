@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-
+import { DataTableModule } from 'angular2-datatable';
 
 //import { JwtModule } from '@auth0/angular-jwt';
 //import { AuthModule } from 'angular2-auth';
@@ -16,8 +16,8 @@ import { fakeBackendProvider, JwtHelper } from './_helpers/index';
 import { routing } from './app.routing';
 import { AuthGuard } from './_guard/index';
 import { JwtInterceptor } from './_helpers/index';
-import { EqualValidator } from './_directives/index';
-import { AuthenticationService, UserService, ProjectService, TaskService } from './_services/index'; //AlertService,
+//import { EqualValidator } from './_directives/index';
+import { AuthenticationService, UserService, ProjectService, TaskService, ActivityService, ReportService } from './_services/index'; //AlertService,
 
 
 import { HomeComponent } from './home/index';
@@ -25,9 +25,11 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { TaskComponent, TaskChildComponent } from './task/index';
 import { ProjectModule } from "./projectModule/project.module";
+import { ActivityComponent } from "./activity/index";
 import { AlertModule } from '../app/_directives/alert.module';
 import { AppHeaderModule } from './common/app-header/app-header.module';
-import { DialogModule } from './common/app-dialog/dialog.module';
+import { ReportComponent } from './report/index';
+//import { DialogModule } from './common/app-dialog/dialog.module';
 
 //import { AUTH_PROVIDERS } from 'angular2-jwt';
 
@@ -46,7 +48,8 @@ import { DialogModule } from './common/app-dialog/dialog.module';
         Ng2AutoCompleteModule,
         AppHeaderModule,
         AlertModule,
-        DialogModule
+      //  DialogModule,
+        DataTableModule,
         //JwtModule.forRoot({
         //    config: {
         //        tokenGetter: () => {
@@ -69,8 +72,11 @@ import { DialogModule } from './common/app-dialog/dialog.module';
         RegisterComponent,
         TaskComponent,
         TaskChildComponent,
-
-        EqualValidator],
+        ActivityComponent,
+        ReportComponent,
+      //  ResetPasswordComponent,
+        //EqualValidator
+    ],
 
 
     providers: [
@@ -82,6 +88,8 @@ import { DialogModule } from './common/app-dialog/dialog.module';
         ProjectService,
         JwtHelper,
         TaskService,
+        ActivityService,
+        ReportService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,

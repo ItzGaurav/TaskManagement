@@ -1,0 +1,101 @@
+﻿
+<form class="form-inline" (ngSubmit)="f.form.valid && updateProject()" #f="ngForm" novalidate>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group col-xs-6">
+                <label for="projectName">Project Name</label>
+                <input type="text" class="form-control" name="projectName" [(ngModel)]="model.projectName" #projectName="ngModel" required placeholder="Project Name">
+                <div *ngIf="f.submitted && !projectName.valid" class="validationerror">Project Name is required</div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="epicId">Epic Id</label>
+                <input type="text" class="form-control" name="epicId" [(ngModel)]="model.epicId" #epicId="ngModel" required placeholder="Epic Id">
+                <div *ngIf="f.submitted && !epicId.valid" class="validationerror">Epic Id is required</div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-6">
+                <label for="ccNumber">CC Number</label>
+                <input type="text" class="form-control" name="ccNumber" [(ngModel)]="model.ccNumber" #ccNumber="ngModel" required placeholder="CC Number">
+                <div *ngIf="f.submitted && !ccNumber.valid" class="validationerror">CC Number is required</div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="resource">Responsibility</label>
+
+                <input ng2-auto-complete
+                       [formControl]="userresource"
+                       [source]="resources"
+                       [list-formatter]="autocompleListFormatter"
+                       value-property-name="id"
+                       display-property-name="name"
+                       (valueChanged)="valueChanged($event)"
+                       
+                       placeholder="Resource"
+                       class="form-control col-xs-6" required>
+                <div *ngIf="f.submitted && !userresource.valid" class="validationerror">Resource is required</div>
+            </div>
+            <br />
+            <br />
+            <div class="clearfix"></div>
+            <div class="form-group col-xs-3">
+                <label for="projectStatus">Project Status</label>
+                <select class="form-control" name="projectStatus" [(ngModel)]="model.projectStatus" #projectStatus="ngModel" required>
+                    <option [ngValue]="undefined" selected>Select Status</option>
+                    <option *ngFor="let status of statuses" [value]="status.name">{{status.name}}</option>
+                </select>
+                <div *ngIf="f.submitted && !projectStatus.valid" class="validationerror">Project Status is required</div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="plannedStartDate">Planned Start Date</label>
+                <input type="date" name="plannedStartDate" class="form-control" [ngModel]="model.plannedStartDate | date:'yyyy-MM-dd'" (ngModelChange)="model.plannedStartDate = $event" [value]="datee | date:'yyyy-MM-dd'" #plannedStartDate="ngModel" required placeholder="Planned Start Date">
+
+                <div *ngIf="f.submitted && !plannedStartDate.valid" class="validationerror">Planned Start Date is required</div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="plannedEndDate">Planned End Date</label>
+                <input type="date" name="plannedEndDate" class="form-control" [ngModel]="model.plannedEndDate | date:'yyyy-MM-dd'" (ngModelChange)="model.plannedEndDate = $event" [value]="datee | date:'yyyy-MM-dd'" #plannedEndDate="ngModel" required placeholder="Planned End Date">
+                <div *ngIf="f.submitted && !plannedEndDate.valid" class="validationerror">Planned End Date is required</div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="plannedEffort">Planned Effort (Hours)</label>
+                <input type="number" min="0" step="1" max="1000" oninput="validity.valid||(value='');" class="form-control" name="plannedEffort" [(ngModel)]="model.plannedEffort" #plannedEffort="ngModel" required placeholder="Planned Effort">
+                <div *ngIf="f.submitted && !plannedEffort.valid" class="validationerror">Planned Effort is required</div>
+            </div>
+            <div class="form-group col-xs-3"></div>
+            <div class="form-group col-xs-3">
+                <label for="actualStartDate">Actual Start Date</label>
+                <input type="date" name="actualStartDate" class="form-control" [ngModel]="model.actualStartDate | date:'yyyy-MM-dd'" (ngModelChange)="model.actualStartDate = $event" [value]="datee | date:'yyyy-MM-dd'" #actualStartDate="ngModel" required>
+
+                <!-- <input type="text" class="form-control" name="plannedStartDate" [(ngModel)]="model.plannedStartDate" #plannedStartDate="ngModel" required placeholder="Planned Start Date">-->
+                <div *ngIf="f.submitted && !actualStartDate.valid" class="validationerror">Actual Start Date is required</div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="actualEndDate">Actual End Date</label>
+                <input type="date" name="actualEndDate" class="form-control" [ngModel]="model.actualEndDate | date:'yyyy-MM-dd'" (ngModelChange)="model.actualEndDate = $event" [value]="datee | date:'yyyy-MM-dd'" #actualEndDate="ngModel" required>
+                <!--<input type="text"  name="plannedEndDate" [(ngModel)]="model.plannedEndDate" #plannedEndDate="ngModel" required placeholder="Planned End Date">-->
+                <div *ngIf="f.submitted && !actualEndDate.valid" class="validationerror">Actual End Date is required</div>
+            </div>
+            <div class="form-group col-xs-3">
+                <label for="actualEffort">Actual Effort (Hours)</label>
+                <input type="number" min="0" step="1" max="1000" oninput="validity.valid||(value='');" class="form-control" name="actualEffort" [(ngModel)]="model.actualEffort" #actualEffort="ngModel" required placeholder="Actual Effort">
+                <div *ngIf="f.submitted && !actualEffort.valid" class="validationerror">Actual Effort is required</div>
+            </div>
+            <div class="form-group col-xs-12">
+                <hr />
+            </div>
+            <div class="form-group col-xs-10">
+                <button type="button" class="btn btn-primary pull-right btn-sm" (click)="onReturnClick($event)">Return</button>
+            </div>
+            <div class="form-group col-xs-1">
+                <button type="button" class="btn btn-default pull-right btn-sm" (click)="clearForm()">Reset</button>
+            </div>
+            <div class="form-group col-xs-1">
+                <button [disabled]="loading" class="btn btn-success pull-right btn-sm">Update</button>
+                <img class="pull-right" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+         
+            </div>
+
+        </div>
+        <alert></alert>
+    </div>
+
+</form>

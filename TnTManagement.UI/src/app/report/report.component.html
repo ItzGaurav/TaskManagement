@@ -1,0 +1,108 @@
+﻿
+<app-header [isUserLoggedIn]="true"></app-header>
+<div class="container">
+    <br />
+    <br />
+    <div class="row">
+        <form class="form-inline" (ngSubmit)="f.form.valid && getActivityByUser()" #f="ngForm" novalidate>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group col-xs-3">
+                        <label>Resource</label>
+                        <input ng2-auto-complete
+                               [formControl]="userresource"
+                               [source]="resources"
+                               [list-formatter]="autocompleListFormatter"
+                               value-property-name="id"
+                               display-property-name="name"
+                               [(ngModel)]="resource"
+                               placeholder="Resource"  class="form-control col-xs-6">
+                        <!--<div *ngIf="f.submitted && !userresource.valid" class="validationerror">Resource is required</div>-->
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label>From Date</label>
+                        <input type="date"  name="fromDate" class="form-control" [ngModel]="fromDate | date:'yyyy-MM-dd'" (ngModelChange)="fromDate = $event" [value]="datee | date:'yyyy-MM-dd'" #fromDate1="ngModel"  placeholder="From Date">
+                        <!--<div *ngIf="f.submitted && !plannedStartDate.valid" class="validationerror">Planned Start Date is required</div>-->
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="toDate">To Date</label>
+                        <input type="date" name="toDate" class="form-control" [ngModel]="toDate | date:'yyyy-MM-dd'" (ngModelChange)="toDate = $event" [value]="datee | date:'yyyy-MM-dd'" #toDate1="ngModel"  placeholder="To Date">
+                        <!--<input type="text"  name="plannedEndDate" [(ngModel)]="model.plannedEndDate" #plannedEndDate="ngModel" required placeholder="Planned End Date">-->
+                        <!--<div *ngIf="f.submitted && !plannedEndDate.valid" class="validationerror">Planned End Date is required</div>-->
+                    </div>
+                    <div class="form-group col-xs-3">
+                 
+                        <button style="margin-top:25px" [disabled]="loading" class="form-control btn btn-success btn-sm">Get</button>
+                        <!--<img class="" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />-->
+                        <!--<a [routerLink]="['/login']" class="btn btn-link">Cancel</a>-->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <br />
+        <div class="col-lg-12 text-center" *ngIf="loading">
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div class="col-lg-12">
+            <table class="table table-bordered" [mfData]="activities" #mf="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="projectName">Project</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="task">Task</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="activityDate">Activity Date</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="noOfHoursSpent">Hours</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="resourceName">Resource</mfDefaultSorter>
+                        </th>
+                        <th style="width: 30%">
+                            <mfDefaultSorter by="comments">Comments</mfDefaultSorter>
+                        </th>
+                        <!--<th style="width: 10%">Action</th>-->
+                    </tr>
+                    <tr>
+                        <!--<th colspan="8">
+                            Filter by name:
+                            <input class="form-control" [(ngModel)]="filterQuery" />
+                        </th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
+                        <td>{{item.projectName}}</td>
+                        <td>{{item.task}}</td>
+                        <td>{{item.activityDate | date:'MMM d, y'}}</td>
+                        <td>{{item.noOfHoursSpent}}</td>
+                        <td>{{item.resourceName}}</td>
+                        <td>{{item.comments}}</td>
+                        <!--<td style='white-space: nowrap'>
+                            <button class="btn btn-danger btn-sm" title="Delete" (click)="removeItem(item)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                             <button type="button" class="btn btn-primary btn-sm" title="Edit" (click)="onEditClick(item)"><span class="glyphicon glyphicon-edit"></span></button>
+                        </td>-->
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-xs-12">
+            <!--<button (click)='downloadExcelFile()' class="btn btn-primary pull-right">Download Report</button>-->
+        </div>
+    </div>
+</div>

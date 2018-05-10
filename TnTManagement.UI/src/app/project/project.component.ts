@@ -1,11 +1,15 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit} from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { NgForm, FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+//import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { ProjectService, UserService, AlertService } from '../_services/index';
 import { Project } from '../_models/project';
 import { ProjectListComponent } from '../projectModule/projectList.component';
+
+import Swal from 'sweetalert2';
+//import { ModalService } from '../modal/index';
 
 @Component({
     providers: [ProjectListComponent],
@@ -17,6 +21,9 @@ import { ProjectListComponent } from '../projectModule/projectList.component';
 export class ProjectComponent implements OnInit {
     model: any = {};
     loading = false;
+    editform = false;
+    editdata: any = {};
+    //private bodyText: string;
     statuses = [
         { name: 'Open' },
         { name: 'Pending' },
@@ -26,8 +33,9 @@ export class ProjectComponent implements OnInit {
     ];
     constructor(private _projectService: ProjectService, private _userService: UserService, private _alertService: AlertService,
         private builder: FormBuilder, private _sanitizer: DomSanitizer,
-        private comp: ProjectListComponent) {
+        private listcomp: ProjectListComponent) {
         this.model.plannedStartDate = new Date();
+        //combProjectEdit = new ProjectEditComponent(NgbModal);
         this.model.plannedEndDate = new Date();
         this.loadResources();
     }
@@ -38,7 +46,9 @@ export class ProjectComponent implements OnInit {
     public userresource: FormControl;
     ngOnInit() {
         document.body.classList.remove('bg-img');
-        this.userresource = new FormControl('')
+        this.userresource = new FormControl('');
+      //  this.clearForm();
+      //  this.bodyText = 'This text can be updated in modal 1';
     }
 
     loadResources() {
@@ -69,20 +79,31 @@ export class ProjectComponent implements OnInit {
         proj.plannedEndDate = this.model.plannedEndDate;
         proj.plannedEffort = this.model.plannedEffort;
         proj.resourceId = this.model.resource['id'];
+        //proj.resource = this.model.resorce['name'];
         // console.log(proj);
         this._projectService.createProject(proj).subscribe(
             data => {
-                this._alertService.success("Project created successfully", false);
+                Swal(
+                    'Success!',
+                    'Project Created Successfully!',
+                    'success'
+                ).then()
                 this.loading = false;
-            
-                this.comp.ngOnInit();
-                setTimeout(()=>{
-                    this.clearForm();
-                },2000)
+               // this.ngOnInit(); 
+                this.model = {};
+                this.listcomp.ngOnInit();
+                //setTimeout(() => {
+                //    this._alertService.clear();
+                //},2000)
 
             },
             error => {
-                alert("error");
+                Swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    //footer: '<a href>Why do I have this issue?</a>',
+                })
                 this.loading = false;
             }
         )
@@ -96,5 +117,19 @@ export class ProjectComponent implements OnInit {
         this.model.plannedEndDate = new Date();
         this.model.plannedEffort = '';
         this.model.resource = null;
+    }
+  
+    editEventFired(item: any) {
+        //console.log(item);
+        this.editform = true;
+        this.editdata = item
+    }
+    onReturnClick() {
+        this.loading = true;
+        setTimeout(()=>{
+            this.editform = false;
+            this.listcomp.editbutton = true;
+            this.loading = false;
+        }, 100); 
     }
 }

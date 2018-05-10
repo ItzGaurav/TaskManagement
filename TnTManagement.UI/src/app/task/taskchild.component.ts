@@ -1,28 +1,4 @@
-﻿//import { Component, OnInit } from '@angular/core';
-
-//@Component({
-//    selector: 'app-exp',
-//    templateUrl: './taskchild.component.html'
-//})
-//export class TaskChildComponent {
-//    _ref: any;
-//    lang: string;
-//    exp: number;
-//    constructor() { }
-
-//    removeObject() {
-//        this._ref.destroy();
-//    }
-
-//    save() {
-//        if (this.lang && this.exp)
-//            alert(`Language: ${this.lang} & Experience: ${this.exp}`);
-//        else
-//            alert('Please enter value to save');
-//    }
-//}
-import { Component, Input, OnInit } from '@angular/core';
-//import { FormGroup } from '@angular/forms';
+﻿import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../_services/index';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";

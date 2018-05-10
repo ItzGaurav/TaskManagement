@@ -11,10 +11,10 @@
     </div>
     <br /><br />
     <div class="row">
-        <div class="col-sm-3">
-            <a [routerLink]="['/project']" class="tile purple">
+        <div *ngIf="!urlRole" class="col-sm-3">
+            <a  [routerLink]="['/project']" class="tile purple">
                 <h3 class="title">Project</h3>
-                <p>Create Project</p>
+                <p>Manage Projects</p>
             </a>
         </div>
         <div class="col-sm-3">
@@ -24,31 +24,33 @@
             </a>
         </div>
         <div class="col-sm-3">
-            <a [routerLink]="['/home']" class="tile blue">
-                <h3 class="title">Home</h3>
-                <p>Home page</p>
-            </a>
-        </div>
-        <div class="col-sm-3">
-            <a [routerLink]="['/home']" class="tile green">
+            <a [routerLink]="['/activity']" class="tile green">
                 <h3 class="title">Activity</h3>
                 <p>Create Activity</p>
             </a>
         </div>
+        
+        <div *ngIf="urlRole" class="col-sm-3">
+          
+        </div>
+        <div *ngIf="urlRole" class="col-sm-3">
+
+        </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
-            <a [routerLink]="['/register']" class="tile red">
-                <h3 class="title">Register</h3>
-                <p>Create the user</p>
+        <div class="col-sm-3" *ngIf="!urlRole">
+            <a [routerLink]="['/report']" class="tile orange">
+                <h3 class="title">Reports</h3>
+                <p>Go for report generation</p>
             </a>
         </div>
-        <div class="col-sm-3">
-            <a [routerLink]="['/task']" class="tile green">
-                <h3 class="title">Task</h3>
-                <p>Create Task</p>
+        <div class="col-sm-3" *ngIf="!urlRole">
+            <a  [routerLink]="['/register']" class="tile cyan">
+                <h3 class="title">User</h3>
+                <p>Manage User</p>
             </a>
         </div>
+     
     </div>
 </div>
 

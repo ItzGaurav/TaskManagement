@@ -103,6 +103,7 @@
     </Content>
     <Content Include="bs-config.json" />
     <Content Include="package.json" />
+    <Content Include="src\app\activity\activity.component.html" />
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\common\app-dialog\dialog.component.css" />
     <Content Include="src\app\common\app-dialog\dialog.component.html" />
@@ -111,9 +112,13 @@
     <Content Include="src\app\home\home.component.css" />
     <Content Include="src\app\home\home.component.html" />
     <Content Include="src\app\login\login.component.html" />
+    <Content Include="src\app\projectModule\projectEdit.component.html" />
     <Content Include="src\app\projectModule\projectList.component.html" />
     <Content Include="src\app\project\project.component.html" />
     <Content Include="src\app\register\register.component.html" />
+    <Content Include="src\app\report\report.component.html" />
+    <Content Include="src\app\common\resetPassword\resetPassword.component.css" />
+    <Content Include="src\app\common\resetPassword\resetPassword.component.html" />
     <Content Include="src\app\task\task.component.html" />
     <Content Include="src\app\task\taskchild.component.html" />
     <Content Include="src\app\_directives\alert.component.html" />
@@ -156,6 +161,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\activity\activity.component.ts" />
+    <TypeScriptCompile Include="src\app\activity\index.ts" />
     <TypeScriptCompile Include="src\app\app.component.spec.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
@@ -170,11 +177,15 @@
     <TypeScriptCompile Include="src\app\login\login.component.ts" />
     <TypeScriptCompile Include="src\app\projectModule\poject-filter.pipe.ts" />
     <TypeScriptCompile Include="src\app\projectModule\project.module.ts" />
+    <TypeScriptCompile Include="src\app\projectModule\projectEdit.component.ts" />
     <TypeScriptCompile Include="src\app\projectModule\projectList.component.ts" />
     <TypeScriptCompile Include="src\app\project\index.ts" />
     <TypeScriptCompile Include="src\app\project\project.component.ts" />
     <TypeScriptCompile Include="src\app\register\index.ts" />
     <TypeScriptCompile Include="src\app\register\register.component.ts" />
+    <TypeScriptCompile Include="src\app\report\index.ts" />
+    <TypeScriptCompile Include="src\app\report\report.component.ts" />
+    <TypeScriptCompile Include="src\app\common\resetPassword\resetPassword.component.ts" />
     <TypeScriptCompile Include="src\app\task\index.ts" />
     <TypeScriptCompile Include="src\app\task\task.component.ts" />
     <TypeScriptCompile Include="src\app\task\taskchild.component.ts" />
@@ -191,17 +202,23 @@
     <TypeScriptCompile Include="src\app\_helpers\urlHelper.component.ts" />
     <TypeScriptCompile Include="src\app\_interface\index.ts" />
     <TypeScriptCompile Include="src\app\_interface\task.interface.ts" />
+    <TypeScriptCompile Include="src\app\_models\activityinfo.ts" />
     <TypeScriptCompile Include="src\app\_models\alert.ts" />
     <TypeScriptCompile Include="src\app\_models\index.ts" />
+    <TypeScriptCompile Include="src\app\_models\password.ts" />
     <TypeScriptCompile Include="src\app\_models\project.ts" />
+    <TypeScriptCompile Include="src\app\_models\projectinfo.ts" />
     <TypeScriptCompile Include="src\app\_models\resource.ts" />
+    <TypeScriptCompile Include="src\app\_models\taskinfo.ts" />
     <TypeScriptCompile Include="src\app\_models\tasks.ts" />
     <TypeScriptCompile Include="src\app\_models\user.ts" />
     <TypeScriptCompile Include="src\app\_models\userReturn.ts" />
+    <TypeScriptCompile Include="src\app\_services\activity.service.ts" />
     <TypeScriptCompile Include="src\app\_services\alert.service.ts" />
     <TypeScriptCompile Include="src\app\_services\authentication.service.ts" />
     <TypeScriptCompile Include="src\app\_services\index.ts" />
     <TypeScriptCompile Include="src\app\_services\project.service.ts" />
+    <TypeScriptCompile Include="src\app\_services\report.service.ts" />
     <TypeScriptCompile Include="src\app\_services\task.service.ts" />
     <TypeScriptCompile Include="src\app\_services\user.service.ts" />
     <TypeScriptCompile Include="src\main.ts" />
@@ -209,6 +226,7 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

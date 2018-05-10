@@ -13,6 +13,10 @@ namespace TnTManagement.Feature.Entities
         [Column(TypeName = "NVARCHAR")]
         [StringLength(255)]
         public string LastModifiedBy { get; set; }
+        [Column(TypeName = "NVARCHAR")]
+        [StringLength(255)]
+        public string CreatedBy { get; set; }
         public DateTime? LastModifiedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

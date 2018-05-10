@@ -13,17 +13,23 @@
 
     <ul class="nav navbar-nav">
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/home']">Home</a></li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/project']">Project</a></li>
+        <li *ngIf="!urlRole" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/project']">Project</a></li>
         <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/task']">Task</a></li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/']">Activity</a></li>
-        <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a></li>
+        <li  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/activity']">Activity</a></li>
+        <li *ngIf="!urlRole" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/register']">Register</a></li>
+        <li *ngIf="!urlRole" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/report']">Reports</a></li>
     </ul>
     <!--<ul class="nav navbar-nav">
-
+      
     </ul>-->
     <ul class="nav navbar-nav navbar-right">
         <li><h5 style="color:white; padding-top: 8px">Hi {{currentUser.username}} !!</h5></li>
+        <li><a title="Change Password" (click)="showDialog = !showDialog"><span class="glyphicon glyphicon-cog"></span></a></li>
         <li><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
 </div>
 <br /><br /><br />
+<app-dialog [(visible)]="showDialog">
+    <h4>Change your password</h4>
+    <!--<button (click)="showDialog = !showDialog" class="btn">Close</button>-->
+</app-dialog>

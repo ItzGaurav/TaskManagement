@@ -23,6 +23,18 @@ namespace TnTManagement.Web.API.API
             }
             return Ok(false);
         }
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Route("update")]
+        public IHttpActionResult UpdateProject(ProjectModel value)
+        {
+            if (value != null)
+            {
+                string userId = GetUserId();
+                return Ok(_projectService.UpdateProject(value, userId));
+            }
+            return Ok(false);
+        }
+
         [Authorize(Roles = "Admin,SuperAdmin,User")]
         [Route("getProjects")]
         public IHttpActionResult GetProject()
@@ -44,6 +56,13 @@ namespace TnTManagement.Web.API.API
         public IHttpActionResult GetAllProjects()
         {
             return Ok(this._projectService.GetAllProjects()); 
+        }
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [Route("deleteproject")]
+        [HttpPost]
+        public IHttpActionResult DeleteProject(int projectId)
+        {
+            return Ok(_projectService.DeleteProject(projectId));
         }
 
     }

@@ -1,0 +1,154 @@
+﻿<app-header [isUserLoggedIn]="true"></app-header>
+<div class="container">
+    <div class="row">
+        <br />
+        <br />
+        <form class="form-inline" (ngSubmit)="saveActivities()" [formGroup]="tsFormGroup">
+            <div formArrayName="newActivityControl">
+                <div *ngFor="let newRow of NewActivity.controls; let i=index" class="panel panel-default">
+                    <div class="panel-heading">
+                        <span>Activity {{i + 1}}</span>
+                        <span class="glyphicon glyphicon-remove pull-right" *ngIf="NewActivity.controls.length > 1" (click)="removeActivity(i)"></span>
+                    </div>
+
+                    <div class="panel-body" [formGroupName]="i">
+
+                        <div class="form-group col-xs-2 margin1">
+                            <label>Project</label>
+                            <select required class="form-control" id="{{i}}" formControlName="projectId" (change)="projectDDChanged(i)">
+                                <option value="0" disabled selected>Select Project</option>
+                                <ng-container *ngFor="let c of projects;">
+                                    <option [ngValue]="c.projectId">{{c.projectName}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-xs-3 margin1">
+                            <label>Task</label>
+                            <select required class="form-control" id="{{i}}" formControlName="taskId">
+                                <option value="0" disabled selected>Select Task</option>
+                                <ng-container *ngFor="let c of tasklist[i];">
+                                    <option [ngValue]="c.taskId">{{c.taskName}}</option>
+                                </ng-container>
+                            </select>
+                            <img class="pull-right" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        </div>
+
+                        <div class="form-group col-xs-2 margin1">
+                            <label>Date</label>
+                            <input type="date" class="form-control" placeholder="Activity Date (required)" formControlName="activityDate">
+                        </div>
+
+                        <div class="form-group col-xs-1 margin1">
+                            <label>Hours</label>
+                            <!--<input type="number"
+                                   class="form-control" required
+                                   id="{{'Houres' + i}}"
+                                   formControlName="hoursSpent">-->
+                            <input type="number" min="0" step="1" max="1000" oninput="validity.valid||(value='');" class="form-control" formControlName="hoursSpent">
+
+                            <!--<div *ngIf="tsFormGroup.get('Houres').dirty && tsFormGroup.get('Houres').invalid" class="alert alert-danger">Please fill all  reruired fields. </div>-->
+                        </div>
+                        <div class="form-group col-xs-4 margin1">
+                            <label>Comments</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="{{'Comment' + i}}"
+                                   placeholder="Comments"
+                                   formControlName="comment">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group col-xs-10">
+                <label></label>
+            </div>
+
+            <div class="form-group col-xs-2">
+                <button type="button" class="btn btn-success btn-number pull-right" (click)="addNewRow()">
+                    <span class="glyphicon glyphicon-plus"></span> Add Another Activity
+                </button>
+            </div>
+
+
+            <br />
+            <br />
+            <div class="form-group col-xs-12">
+                <!--<button type="submit" class="btn btn-primary pull-right btn-sm" [disabled]="!myForm.valid">
+                    <span class="glyphicon glyphicon-send"></span> Submit
+                </button>-->
+                <button type="submit" class="btn btn-primary pull-right" [disabled]="!tsFormGroup.valid">Submit</button>
+            </div>
+          
+        
+        </form>
+
+
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <br />
+        <div class="col-lg-12 text-center" *ngIf="loading">
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div class="col-lg-12">
+            <table class="table table-bordered" [mfData]="allActivites" #mf="mfDataTable" [mfRowsOnPage]="5">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="projectName">Project</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="task">Task</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="activityDate">Activity Date</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">
+                            <mfDefaultSorter by="noOfHoursSpent">Hours</mfDefaultSorter>
+                        </th>
+                        <th style="width: 30%">
+                            <mfDefaultSorter by="comments">Comments</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">Action</th>
+                    </tr>
+                    <tr>
+                        <!--<th colspan="8">
+                            Filter by name:
+                            <input class="form-control" [(ngModel)]="filterQuery" />
+                        </th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
+                        <td>{{item.projectName}}</td>
+                        <td>{{item.task}}</td>
+                        <td>{{item.activityDate | date:'MMM d, y'}}</td>
+                        <td>{{item.noOfHoursSpent}}</td>
+                        <td>{{item.comments}}</td>
+                        <td style='white-space: nowrap'>
+                            <button class="btn btn-danger btn-sm" title="Delete" (click)="removeItem(item)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" title="Edit" (click)="onEditClick(item)"><span class="glyphicon glyphicon-edit"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-xs-12">
+            <button (click)='downloadExcelFile()' class="btn btn-primary pull-right">Download Report</button>
+        </div>
+    </div>
+
+
+</div>

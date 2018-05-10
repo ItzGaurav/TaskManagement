@@ -15,7 +15,8 @@ namespace TnTManagement.Web.API.API
     [RoutePrefix("api/user")]
     public class UserController : BaseApiController
     {
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+     //   [AllowAnonymous]
         [Route("create")]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
@@ -32,7 +33,7 @@ namespace TnTManagement.Web.API.API
             }
             this.AppUserManager.UserValidator = new UserValidator<ApplicationUser>(this.AppUserManager)
             {
-                AllowOnlyAlphanumericUserNames = true,
+               // AllowOnlyAlphanumericUserNames = true,
                 RequireUniqueEmail = true
             };
             //this.AppUserManager.UserValidator = new MyCustomUserValidator(this.AppUserManager)
@@ -50,18 +51,15 @@ namespace TnTManagement.Web.API.API
             };
             var user = new ApplicationUser()
             {
-                UserName = createUserModel.Username,
+                UserName = createUserModel.Email.Split('@')[0],
                 Email = createUserModel.Email,
                 FirstName = createUserModel.FirstName,
                 LastName = createUserModel.LastName,
 
                 // JoinDate = DateTime.Now,
             };
-
-            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
-
-
-
+            string defaultPassword = "P@ssw0rd";
+            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, defaultPassword);
             if (!addUserResult.Succeeded)
             {
                 return GetErrorResult(addUserResult);
@@ -83,16 +81,44 @@ namespace TnTManagement.Web.API.API
             //Created(locationHeader, TheModelFactory.Create(user));
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Route("changePassword")]
+        [Authorize(Roles = "SuperAdmin,Admin,User")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            this.AppUserManager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = false,
+                RequireLowercase = true,
+                RequireUppercase = true,
+            };
+            IdentityResult result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            return Ok();
+        }
+
+
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
-            return Ok(this.AppUserManager.Users.ToList());
+            return Ok(this.AppUserManager.Users.Where(i => i.DeletedOn == null).ToList());
         }
         [Route("getresources")]
+        [Authorize(Roles = "SuperAdmin,Admin,User")]
         public IHttpActionResult GetResources()
         {
-            var users = this.AppUserManager.Users.ToList();
+            var users = this.AppUserManager.Users.Where(i=>i.DeletedOn == null).ToList();
             List<ResourceModel> resources = new List<ResourceModel>();
             foreach (var user in users)
             {
@@ -103,12 +129,36 @@ namespace TnTManagement.Web.API.API
             }
             return Ok(resources);
         }
-        //[Route("tokenvalid")]
-        //[Authorize(Roles = "SuperAdmin,Admin,User")]
-        //public IHttpActionResult GetAccess()
-        //{
-        //    return Ok(true);
-        //}
+
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpPost]
+        [Route("delete")]
+        public async Task<IHttpActionResult> DeleteUser(string userId)
+        {
+
+            //Only SuperAdmin or Admin can delete users (Later when implement roles)
+
+            var appUser = await this.AppUserManager.FindByIdAsync(userId);
+            var currentRoles = await this.AppUserManager.GetRolesAsync(appUser.Id);
+            var role = currentRoles.Where(i => i.Contains("SuperAdmin")).FirstOrDefault();
+           
+            if (appUser != null && role == null)
+            {
+                appUser.DeletedOn = DateTime.Now;
+                IdentityResult result = await this.AppUserManager.UpdateAsync(appUser);
+
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                return Ok(true);
+
+            }
+
+            return NotFound();
+
+        }
 
     }
 }

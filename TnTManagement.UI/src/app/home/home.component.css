@@ -70,3 +70,9 @@ strong {
 .tile.orange:hover {
   background: #b8431f;
 }
+.tile.cyan {
+  background: #33F0FF;
+}
+.tile.cyan:hover {
+  background: #26EAFA;
+}

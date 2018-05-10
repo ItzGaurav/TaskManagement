@@ -1,10 +1,10 @@
-﻿
-import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { TaskType, TaskList } from '../_models/tasks';
-
-import { TaskService, ProjectService } from '../_services/index';
+import { TaskService, ProjectService, AlertService } from '../_services/index';
+import * as _ from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'task',
@@ -14,12 +14,21 @@ import { TaskService, ProjectService } from '../_services/index';
 export class TaskComponent implements OnInit {
     public myForm: FormGroup;
     public options: any = [];
-    constructor(private _fb: FormBuilder, private taskService: TaskService, private _projectService: ProjectService) {
+    public allTask: any;
+    loading = false;
+    public filterQuery = "";
+    public rowsOnPage: 5;
+
+    constructor(private _fb: FormBuilder, private taskService: TaskService,
+        private _projectService: ProjectService,
+        private _alertService: AlertService
+    ) {
         this.loadProjects();
        
       
     }
     ngOnInit() {
+        document.body.classList.remove('bg-img');
         this.myForm = this._fb.group({
             projectId: [0, [Validators.required]],
             taskName: ['', [Validators.required]],
@@ -31,10 +40,21 @@ export class TaskComponent implements OnInit {
         this.myForm.controls['plannedStartDate'].setValue(this.currentDate());
         this.myForm.controls['plannedEndDate'].setValue(this.currentDate());
         this.addTaskType();
-        /* subscribe to addresses value changes */
-        // this.myForm.controls['addresses'].valueChanges.subscribe(x => {
-        //   console.log(x);
-        // })
+        this.loadTasks();
+        
+    }
+    loadTasks() {
+        this.loading = true;
+        this.taskService.getAllTaskByResource().subscribe(
+            data => {
+                this.allTask = data;
+                this.loading = false;
+            },
+            error => {
+                this._alertService.error("Tasks is faild to load", false);
+                this.loading = false;
+            }
+        )
     }
     initAddress() {
         return this._fb.group({
@@ -84,45 +104,97 @@ export class TaskComponent implements OnInit {
 
     
     save(model: TaskList) {
-
-      //  console.log(JSON.stringify(model));
-       // let task: Task[];
-       // var reportPersonList: Task[] = new Array();
-
-       // var people = this.myForm.get('addresses') as FormArray;
-
-        //for (let i = 0; i < people.length; i++) {
-        //    var p = new Task;
-        //    p.Name = people.at(i).get('name').value;
-            //p.firstName = people.at(i).get('firstName').value;
-            //p.middleName = people.at(i).get('middleName').value;
-            //var addresses = people.at(i).get('addresses') as FormArray;
-            //for (let j = 0; j < addresses.length; j++) {
-            //    var a = new PersonAddress;
-            //    a.street = addresses.at(j).get('street').value;
-
-            //    p.addresses.push(a);
-            //};
-          //  reportPersonList.push(p);
-       // }
-      //  var taskData = new TaskList;
-       // taskData.TaskData = reportPersonList;
-       // console.log(JSON.StaskData);
-       // let requestData: TaskList;
-        //const control = <FormArray>this.myForm.controls['tasktype'].value;
-        //const taskName = <FormArray>this.myForm.controls['taskName'].value;
-        //const terminals = <FormArray>this.myForm.value;
-        //requestData.taskName = taskName;
-       // console.log(terminals);
-        this.taskService.createAllTasks(this.myForm.value).subscribe(data => {
-            alert("success");
+        this.taskService.createAllTasks(this.myForm.value).subscribe(
+            data => {
+                Swal(
+                    'Success!',
+                    'Tasks Created Successfully!',
+                    'success'
+                ).then()
+                this.loading = false;
+                this.ngOnInit();
         },
             error => {
-                // console.log(error['error']['error_description']);
-                 alert(error);
-                
+                Swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
             });;
         this.myForm.reset()
+    }
+
+    public deleteTask(item: any) {
+        if (this.boolCreator(item.createdId)) {
+            Swal({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this Task and Activities!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.value) {
+                    this.taskService.deleteTask(item.taskId).subscribe(
+                        data => {
+                            if (data) {
+                                this.allTask = _.filter(this.allTask, (elem) => elem != item);
+                                Swal(
+                                    'Deleted!',
+                                    'Your Task has been deleted.',
+                                    'success'
+                                );
+                            }
+                            else {
+                                Swal({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong!',
+                                })
+                            }
+                        },
+                        error => {
+                            Swal({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        }
+                    );
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal(
+                        'Cancelled',
+                        'Your task is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+        else {
+            Swal({
+                type: 'error',
+                title: 'No',
+                text: 'You can delete the task which is created by you!',
+            })
+        }
+        
+    }
+
+    boolCreator(createdId : string): boolean {
+        if (localStorage.getItem('currentUser')) {
+            let token = localStorage.getItem('currentUser');
+            var parsedData = JSON.parse(token);
+            //console.log(parsedData);
+            var data = this.taskService.checkCreator(parsedData['token']);
+            //console.log(createdId);
+          //  console.log(data);
+
+            if (data == createdId) {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
     }
 
 }

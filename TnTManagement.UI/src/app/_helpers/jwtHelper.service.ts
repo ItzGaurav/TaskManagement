@@ -7,7 +7,7 @@ export class JwtHelper {
     tokenGetter: () => string;
 
     constructor() {
-      //  this.tokenGetter = config && config.tokenGetter || function () { };
+        //  this.tokenGetter = config && config.tokenGetter || function () { };
     }
 
     public urlBase64Decode(str: string): string {
@@ -81,9 +81,7 @@ export class JwtHelper {
         if (token === null) {
             return null;
         }
-
         let parts = token.split('.');
-
         if (parts.length !== 3) {
             throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
         }
@@ -127,4 +125,9 @@ export class JwtHelper {
         //console.log(!(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000));
         //return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
     }
+    public parseJwt(token: string) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    };
 }

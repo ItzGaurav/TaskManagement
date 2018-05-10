@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using TnTManagement.Web.API.Infrastructure;
 
 namespace TnTManagement.Web.API
 {
@@ -12,6 +13,8 @@ namespace TnTManagement.Web.API
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            IdentityHelper.SeedIdentities();
+
         }
     }
 }

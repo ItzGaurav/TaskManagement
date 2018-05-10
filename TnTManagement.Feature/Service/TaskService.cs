@@ -52,8 +52,8 @@ namespace TnTManagement.Feature.Service
                         PlannedTaskEffort = item.PlannedHours,
                         ResourceID = item.Resources.Id,
                         TaskStatus = "Open",
-                        LastModifiedBy = UserId,
-                        LastModifiedDate = DateTime.Now
+                        CreatedBy = UserId,
+                        CreatedDate = DateTime.Now
                     };
                     db.Tasks.Add(tasks);
                 }
@@ -62,6 +62,18 @@ namespace TnTManagement.Feature.Service
             }
             return false;
         }
+        public List<TaskDropDownModel> GetTasksByProject(int projectId, string userId)
+        {
+            var tasks = db.Tasks.Where(i => i.ProjectId == projectId && i.ResourceID == userId ).ToList();
+            return tasks.Select(a => new TaskDropDownModel()
+            {
+                ProjectId = a.ProjectId,
+                TaskID = a.TaskID,
+                TaskName = a.TaskName + ' ' +'-'+ ' ' + a.TaskType,
+               // TaskType = a.TaskType,
+            }).ToList();
+        }
+
         public Tasks UpdateTask(TaskModel value)
         {
             if (value != null)
@@ -87,10 +99,46 @@ namespace TnTManagement.Feature.Service
             //var tasks = db.Tasks.Where(i => i.Id == taskId).FirstOrDefault();
             return null;
         }
-        public List<Tasks> GetAllTasks()
+        public List<TaskReturnModel> GetAllTasks(string UserId)
         {
-            var tasklist = db.Tasks.ToList();
+            var tasklist = (from task in db.Tasks
+                            join proj in db.Projects on task.ProjectId equals proj.ProjectID
+                            where task.CreatedBy == UserId || task.ResourceID == UserId
+                            select new TaskReturnModel()
+                            {
+                                TaskID = task.TaskID,
+                                TaskName = task.TaskName,
+                                ProjectId = task.ProjectId,
+                                ProjectName = proj.ProjectName,
+                                TaskType = task.TaskType,
+                                TaskStatus = task.TaskStatus,
+                                ResourceID = task.ResourceID,
+                                Description = task.Description,
+                                ActualTaskEffort = task.ActualTaskEffort,
+                                ActualTaskStartDate = task.ActualTaskStartDate,
+                                ActualTaskEndDate = task.ActualTaskEndDate,
+                                PlannedTaskEffort = task.PlannedTaskEffort,
+                                PlannedTaskEndDate = task.PlannedTaskEndDate,
+                                PlannedTaskStartDate = task.PlannedTaskStartDate,
+                                CreatedId = task.CreatedBy,
+                            }).Distinct().ToList();
             return tasklist;
         }
+        public bool DeleteTask(int taskId)
+        {
+            var item = db.Tasks.Where(i => i.TaskID == taskId).FirstOrDefault();
+            db.Tasks.Remove(item);
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
     }
 }

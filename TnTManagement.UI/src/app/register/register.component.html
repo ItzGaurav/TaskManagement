@@ -1,111 +1,46 @@
 ﻿<app-header [isUserLoggedIn]="true"></app-header>
 <div class="container">
     <div class="row">
-        <!--<div id="signupbox" style="display:inline-block; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title">Sign Up</div>-->
-                    <!--<div style="float:right; font-size: 85%; position: relative; top:-10px"><a [routerLink]="['/login']" id="signinlink" href="#">Sign In</a></div>-->
-                <!--</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
-
-                        <div class="form-group">
-                            <label for="firstname" class="col-md-3 control-label">First Name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required placeholder="First Name">
-                                <div *ngIf="f.submitted && !firstName.valid" class="validationerror">First Name is required</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastname" class="col-md-3 control-label">Last Name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required placeholder="Last Name">
-                                <div *ngIf="f.submitted && !lastName.valid" class="validationerror">Last Name is required</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required placeholder="Email Address" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-                                <div *ngIf="f.submitted && !email.valid" class="validationerror">Email is required</div>
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="userName" class="col-md-3 control-label">User Name</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control" name="userName" [(ngModel)]="model.userName" #userName="ngModel" required placeholder="User Name">
-                                <div *ngIf="f.submitted && !userName.valid" class="validationerror">User Name is required</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-3 control-label">Password</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true">
-                                <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="validationerror">
-                                    Password is required
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-md-3 control-label">Confirm Password</label>
-                            <div class="col-md-9">
-                                <input type="password" class="form-control" name="confirmPassword" placeholder="Password" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" required validateEqual="password">
-                                <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)" class="validationerror">
-                                    Password is mismatch
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-group">-->
-                            <!-- Button -->
-                            <!--<div class="col-md-offset-3 col-md-9">
-                                <button [disabled]="loading" class="btn btn-primary">Sign Up</button>
-                                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
-                            </div>
-                        </div>
-                        <alert></alert>
-                    </form>
-                </div>
-            </div>
-        </div>-->
-
         <br />
         <br />
-
-
         <form class="form-inline" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="form-group col-xs-6">
+                    <div class="form-group col-xs-12">
                         <label for="firstname">First Name</label>
                         <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required placeholder="First Name">
                         <div *ngIf="f.submitted && !firstName.valid" class="validationerror">First Name is required</div>
                     </div>
-                    <div class="form-group col-xs-6">
+                    <div class="form-group col-xs-12">
                         <label for="lastname">Last Name</label>
                         <input type="text" class="form-control" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required placeholder="Last Name">
                         <div *ngIf="f.submitted && !lastName.valid" class="validationerror">Last Name is required</div>
                     </div>
                   
                     <div class="clearfix"></div>
-                    <div class="form-group col-xs-6">
+                    <div class="form-group col-xs-12">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required placeholder="Email Address" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
                         <div *ngIf="f.submitted && !email.valid" class="validationerror">Email is required</div>
                     </div>
-                    <div class="form-group col-xs-6">
+                    <div class="form-group col-xs-12">
+                        <hr />
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <button [disabled]="loading" class="btn btn-primary pull-right btn-sm">Submit</button>
+                        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                        <!--<a [routerLink]="['/login']" class="btn btn-link">Cancel</a>-->
+                    </div>
+                    <!--<div class="form-group col-xs-6">
                         <label for="userName">User Name</label>
 
                         <input type="text" class="form-control" name="userName" [(ngModel)]="model.userName" #userName="ngModel" required placeholder="User Name">
                         <div *ngIf="f.submitted && !userName.valid" class="validationerror">User Name is required</div>
 
-                    </div>
+                    </div>-->
                     <!--<br />
                     <br />-->
-                    <div class="clearfix"></div>
+                    <!--<div class="clearfix"></div>
                     <div class="form-group col-xs-6">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required validateEqual="confirmPassword" reverse="true">
@@ -119,19 +54,87 @@
                         <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)" class="validationerror">
                             Password is mismatch
                         </small>
-                    </div>
+                    </div>-->
                 </div>
-
             </div>
-
-            <!-- Button -->
-            <div class="form-group col-xs-12">
-                <button [disabled]="loading" class="btn btn-primary pull-right btn-sm">Sign Up</button>
-                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                <!--<a [routerLink]="['/login']" class="btn btn-link">Cancel</a>-->
-            </div>
-
-            <alert></alert>
+            <alert *ngIf="enableAlert"></alert>
         </form>
+    </div>
+
+    <br />
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-12 text-center" *ngIf="loading">
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+        <div class="col-lg-12" *ngIf="!loading">
+            <table class="table table-bordered" [mfData]="alluser" #mf="mfDataTable" [mfRowsOnPage]="5"> 
+                <!--| dataFilter : filterQuery-->
+                <thead> 
+                    <tr>
+
+                        <th style="width: 25%">
+                            <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+                        </th>
+                        <th style="width: 25%">
+                            <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="userName">Username</mfDefaultSorter>
+                        </th>
+                        <th style="width: 10%">Action</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">
+                            Filter by name:
+                            <input class="form-control" [(ngModel)]="filterQuery" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
+                        <td>{{item.firstName}}</td>
+                        <td>{{item.lastName}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.userName}}</td>
+                        <td style='white-space: nowrap'>
+                            <button class="btn btn-danger btn-sm" title="Delete" (click)="removeUser(item)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <!--<button class="btn btn-danger" title="remove" (click)="removeItem(item); showDialog = !showDialog"><span class="glyphicon glyphicon-remove"></span></button>
+                            <app-dialog [(visible)]="showDialog">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Delete !!</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Do you wanted to delete? {{item.projectName}}</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" (click)="showDialog = !showDialog">Cancel</button>
+                                    <button type="button" class="btn btn-danger" (click)="showDialog = !showDialog">Delete</button>
+                                </div>
+                            </app-dialog>-->
+                            <!--<button class="btn btn-primary" title="edit" (click)="edit(content)"></button>-->
+                            <!--<button type="button" class="btn btn-primary" (click)="showChildModal()"></button>-->
+                            <!--<button  (click)="open(content)"><span class="glyphicon glyphicon-edit"></span></button>-->
+                            <!--<button class="btn btn-primary" (click)="openModal('custom-modal-1')"><span class="glyphicon glyphicon-edit"></span></button>-->
+                            <!--<button type="button" class="btn btn-primary btn-sm" title="Details"><span class="glyphicon glyphicon-folder-open"></span></button>-->
+                         <!--   <button type="button" class="btn btn-primary btn-sm" title="Edit" *ngIf="editbutton" (click)="onEditClick(item)"><span class="glyphicon glyphicon-edit"></span></button>-->
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>

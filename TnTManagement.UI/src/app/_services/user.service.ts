@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { User, UserReturn, Resource } from '../_models/index';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User, UserReturn, Resource,Password } from '../_models/index';
 import { UrlHelper } from '../_helpers/urlHelper.component';
 
 
@@ -20,5 +20,11 @@ export class UserService {
     }
     getResources() {
         return this.httpClient.get<Resource[]>(UrlHelper.apiEndpoint + UrlHelper.getResourceUrl);
+    }
+    changePassword(passwordModel: Password) {
+        return this.httpClient.post(UrlHelper.apiEndpoint + UrlHelper.changePasswordUrl, passwordModel, { headers: new HttpHeaders().set('Content-Type', 'application/json') });
+    }
+    deleteUser(userId: string) {
+        return this.httpClient.post(UrlHelper.apiEndpoint + UrlHelper.deleteUser + userId, null);
     }
 }

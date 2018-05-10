@@ -30,8 +30,15 @@
             '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.js',
             '@angular/animations/browser': 'npm:@angular/animations/bundles/animations-browser.umd.js',
             '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
-            //'@toverux/ngx-sweetalert2': 'npm:@toverux/ngx-sweetalert2/',
-
+            'sweetalert2': 'npm:sweetalert2/dist/sweetalert2.all.js',
+            //'ngx-bootstrap': 'npm:ngx-bootstrap',
+            //'moment': 'node_modules/moment/moment.js',
+            //'jquery': 'node_modules/jquery',
+            //'underscore': 'node_modules/underscore/underscore.js',
+            //'ngx-bootstrap': 'node_modules/ngx-bootstrapbundles/ngx-bootstrap.umd.js',
+            //'ngx-bootstrap': 'https://unpkg.com/ngx-bootstrap/bundles/ngx-bootstrap.umd.min.js',
+           // '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+            //'@toverux/ngx-sweetalert2': 'npm:@toverux/ngx-sweetalert2/dist',
             //'angular2-jwt': 'npm:angular2-jwt',
             //'angular-jwt': 'node_modules/@auth0/angular-jwt',
             //'angular2-auth': 'npm:angular2-auth/dist',
@@ -41,7 +48,9 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'tslib': 'npm:tslib/tslib.js',
-            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+            //'underscore': 'npm:underscore@1.8.3',
+            //'jquery': 'npm:jquery@3.3.1'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -64,10 +73,42 @@
                 main: './index.js',
                 defaultExtension: 'js'
             },
+            //'ngx-bootstrap': {
+            //    format: 'cjs',
+            //    main: 'bundles/ngx-bootstrap.umd.js',
+            //    defaultExtension: 'js'
+            //},
+            'moment': {
+                main: 'moment.js',
+                defaultExtension: 'js'
+            },
+           
             //'angular-jwt': {
             //    "defaultExtension": "js"
             //}
 
         }
     });
+
+    if (!global.noBootstrap) { bootstrap(); }
+
+    // Bootstrap the `AppModule`(skip the `app/main.ts` that normally does this)
+    function bootstrap() {
+
+        // Stub out `app/main.ts` so System.import('app') doesn't fail if called in the index.html
+        System.set(System.normalizeSync('app/main.ts'), System.newModule({}));
+
+        // bootstrap and launch the app (equivalent to standard main.ts)
+        Promise.all([
+          System.import('@angular/platform-browser-dynamic'),
+          System.import('app/app.module')
+        ])
+        .then(function (imports) {
+            var platform = imports[0];
+            var app = imports[1];
+            platform.platformBrowserDynamic().bootstrapModule(app.AppModule);
+        })
+        .catch(function (err) { console.error(err); });
+    }
+
 })(this);

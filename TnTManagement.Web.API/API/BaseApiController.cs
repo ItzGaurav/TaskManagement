@@ -22,6 +22,7 @@ namespace TnTManagement.Web.API.API
         {
             string userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "Id").Value;
             return userId;
+
         }
 
         protected ApplicationUserManager AppUserManager
