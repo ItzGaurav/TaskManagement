@@ -17,6 +17,7 @@ namespace TnTManagement.Web.API.API
     {
         //[Authorize(Roles = "SuperAdmin")]
         [Route("create")]
+
         public async Task<IHttpActionResult> Create(CreateRoleBindingModel model)
         {
             if (!ModelState.IsValid)
